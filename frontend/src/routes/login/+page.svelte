@@ -13,7 +13,7 @@
 <style>
   #form-wrapper {
     width: 100%;
-    height: calc(100% - 180px);
+    height: calc(100% - 150px);
     display: flex;
     align-items: center;
     justify-content: center;
