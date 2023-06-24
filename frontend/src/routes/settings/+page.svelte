@@ -1,1 +1,5 @@
-<h1>Settings</h1>
+<script lang="ts">
+  import Nav from "../../components/Nav.svelte";
+</script>
+
+<Nav activeButton={0} />
