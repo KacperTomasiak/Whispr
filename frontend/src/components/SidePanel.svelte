@@ -20,7 +20,7 @@
 <style>
   div {
     width: 300px;
-    height: calc(100% - 100px);
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;
