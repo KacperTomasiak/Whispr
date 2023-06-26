@@ -27,6 +27,10 @@
     cursor: pointer;
   }
 
+  button:hover {
+    opacity: 0.8;
+  }
+
   .active {
     color: #131516;
     background-color: #06d6a0;

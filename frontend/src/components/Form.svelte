@@ -1,24 +1,33 @@
 <script lang="ts">
+  import { privateKey } from "../shared/user";
   import Button from "./Button.svelte";
+
   export let type: string;
+
+  const generatePrivateKey = (): void => {
+    let letters: string = "abcdefghijklmnopqrstuvwxyz";
+    let numbers: string = "0123456789";
+    let chars: string = letters + numbers;
+    $privateKey = "$whispr0x";
+
+    for (let i = 0; i < 27; i++) {
+      let num: number = Math.floor(Math.random() * chars.length);
+      $privateKey += chars.substring(num, num + 1);
+    }
+  };
 </script>
 
 {#if type == "signup"}
-  <form>
+  <form on:submit|preventDefault={generatePrivateKey}>
     <h2>Generate your private key</h2>
     <input
       type="text"
       name="privateKey"
       id="private-key"
-      value="$whispr0x7ab81hrt4kf09bv17hrq24x0dvt"
+      bind:value={$privateKey}
       readonly
     />
-    <Button
-      message="Generate"
-      isActive={true}
-      link="none"
-      on:click={(e) => e.preventDefault()}
-    />
+    <Button message="Generate" isActive={true} link="none" />
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
 {:else if type == "login"}
@@ -28,7 +37,7 @@
       type="text"
       name="privateKey"
       id="private-key"
-      value="$whispr0x7ab81hrt4kf09bv17hrq24x0dvt"
+      bind:value={$privateKey}
     />
     <Button
       message="Log In"
