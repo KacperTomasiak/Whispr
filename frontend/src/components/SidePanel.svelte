@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { isVisible } from "../shared/visibility";
   import Button from "./Button.svelte";
   import UserPanel from "./UserPanel.svelte";
 
@@ -7,7 +8,12 @@
 
 <div>
   <div id="chats">No chats...</div>
-  <Button message="New session" isActive={true} link="none" />
+  <Button
+    message="New session"
+    isActive={true}
+    link="none"
+    on:click={() => ($isVisible = true)}
+  />
   {#if option == "profile"}
     <UserPanel option="profile" />
   {:else if option == "settings"}
