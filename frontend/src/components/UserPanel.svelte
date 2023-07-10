@@ -1,11 +1,13 @@
 <script lang="ts">
+  import { username } from "../shared/user";
+
   export let option: string;
 </script>
 
 <div id="user-panel">
   <a href="/profile" id="user">
     <div id="profile-picture" />
-    <div id="nickname">$test_user</div>
+    <div id="nickname">{$username}</div>
   </a>
   <a class:active={option == "profile"} href="/profile" id="profile"
     ><i class:active={option == "profile"} class="fa-solid fa-user" />Profile</a

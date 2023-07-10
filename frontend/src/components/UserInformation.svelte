@@ -1,12 +1,23 @@
 <script lang="ts">
+  import { username } from "../shared/user";
   import Button from "./Button.svelte";
+
+  let temporaryUsername: string = $username;
+  const updateUsername = (): void => {
+    $username = temporaryUsername;
+  };
 </script>
 
 <div id="content-wrapper">
   <div id="user">
     <div id="profile-picture" />
-    <div id="nickname">$test_user</div>
-    <Button message="Save" isActive={true} link="none" />
+    <div id="nickname">{$username}</div>
+    <Button
+      message="Save"
+      isActive={true}
+      link="none"
+      on:click={updateUsername}
+    />
   </div>
   <div id="information">
     <div id="picture">
@@ -19,7 +30,7 @@
         type="text"
         name="username"
         id="username-input"
-        value="$test_user"
+        bind:value={temporaryUsername}
       />
     </div>
   </div>
