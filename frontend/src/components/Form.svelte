@@ -1,5 +1,6 @@
 <script lang="ts">
   import { privateKey } from "../shared/user";
+  import { goto } from "$app/navigation";
   import Button from "./Button.svelte";
 
   export let type: string;
@@ -13,6 +14,22 @@
     for (let i = 0; i < 27; i++) {
       let num: number = Math.floor(Math.random() * chars.length);
       $privateKey += chars.substring(num, num + 1);
+    }
+  };
+
+  const sendData = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    let response = await fetch(`${api}/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        privateKey: $privateKey,
+      }),
+    });
+    if (response.status == 200) {
+      goto("/");
     }
   };
 </script>
@@ -31,7 +48,7 @@
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
 {:else if type == "login"}
-  <form>
+  <form on:submit|preventDefault={sendData}>
     <h2>Enter your private key</h2>
     <input
       type="text"
@@ -39,12 +56,7 @@
       id="private-key"
       bind:value={$privateKey}
     />
-    <Button
-      message="Log In"
-      isActive={true}
-      link="none"
-      on:click={(e) => e.preventDefault()}
-    />
+    <Button message="Log In" isActive={true} link="none" />
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
 {/if}
