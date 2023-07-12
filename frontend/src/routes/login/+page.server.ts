@@ -1,14 +1,8 @@
 import { redirect } from "@sveltejs/kit";
+import { getUserData } from "../../shared/user";
 
-export const load = async ({ cookies }): Promise<void> => {
-  const api: string = "http://localhost:3000";
-  let response = await fetch(`${api}/user`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  let result = await response.json();
+export const load = async (): Promise<void> => {
+  let result = await getUserData();
   if (result.privateKey != "") {
     throw redirect(302, "/");
   }

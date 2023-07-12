@@ -2,7 +2,7 @@ import * as express from "express";
 import * as cors from "cors";
 import { createDatabase, createTable } from "./api/database";
 import { authenticateUser } from "./api/login";
-import { user, getData } from "./api/user";
+import { user, getData, changeUsername } from "./api/user";
 
 const app = express();
 const port: number | string = 3000 || process.env.PORT;
@@ -29,6 +29,12 @@ app.post("/login", async (req, res): Promise<void> => {
 
 app.get("/user", (req, res): void => {
   res.send(JSON.stringify(user));
+});
+
+app.post("/change-username", (req, res): void => {
+  changeUsername(user.privateKey, req.body.username);
+  getData(user.privateKey);
+  res.end();
 });
 
 app.get("/logout", (req, res): void => {
