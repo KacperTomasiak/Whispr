@@ -7,7 +7,7 @@
     "start": "nodemon src/server.js"
   },
   "keywords": [],
-  "author": "KacperTomasiak",
+  "author": "Kacper Tomasiak",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
