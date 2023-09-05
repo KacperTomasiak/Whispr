@@ -1,6 +1,23 @@
 <script lang="ts">
   import { isVisible } from "../shared/visibility";
   import Button from "./Button.svelte";
+
+  let session: string = "";
+
+  const generateSession = (): void => {
+    session = "";
+    let letters: string = "abcdefghijklmnopqrstuvwxyz";
+    let numbers: string = "0123456789";
+    let chars: string = letters + numbers;
+
+    for (let i: number = 0; i < 7; i++) {
+      for (let j: number = 0; j < 4; j++) {
+        let num: number = Math.floor(Math.random() * chars.length);
+        session += chars.substring(num, num + 1);
+      }
+      if (i < 6) session += "-";
+    }
+  };
 </script>
 
 <form>
@@ -10,25 +27,20 @@
     type="text"
     name="generatedSessionId"
     id="generated-session-id"
-    value="0fx9-d4h7-ay87-94bc-ytf8-gh41-qw21"
+    bind:value={session}
     readonly
   />
-  <textarea name="sessionLink" id="session-link" cols="30" rows="10" readonly>
-    app.whispr.com/session/0fx9-d4h7-ay87-94bc-ytf8-gh41-qw21
-  </textarea>
   <Button
     message="Generate session"
     isActive={true}
     link="none"
-    on:click={(e) => e.preventDefault()}
+    on:click={(e) => {
+      e.preventDefault();
+      generateSession();
+    }}
   />
   <h2>Join new session</h2>
-  <input
-    type="text"
-    name="newSessionId"
-    id="new-session-id"
-    value="0fx9-d4h7-ay87-94bc-ytf8-gh41-qw21"
-  />
+  <input type="text" name="newSessionId" id="new-session-id" />
   <Button
     message="Join session"
     isActive={true}
@@ -63,8 +75,7 @@
     font-size: 2.4rem;
   }
 
-  input,
-  textarea {
+  input {
     border: none;
     border-radius: 20px;
     background-color: #131516;
