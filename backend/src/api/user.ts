@@ -24,6 +24,16 @@ const getData = (privateKey: string): void => {
       user.accountAge = Number(result[0].days);
     }
   );
+  connection.query(
+    `SELECT session FROM whispr.sessions WHERE private_key = "${privateKey}"`,
+    (err, result) => {
+      if (err) throw err;
+      let length: number = result.length;
+      for (let i: number = 0; i < length; i++) {
+        user.sessions.push(result[i].session);
+      }
+    }
+  );
 };
 
 const changeUsername = (privateKey: string, username: string): void => {

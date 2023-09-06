@@ -40,6 +40,7 @@ app.post("/change-username", (req, res): void => {
 app.post("/join-session", (req, res): void => {
   let session: string = req.body.session;
   joinSession(user.privateKey, session);
+  res.end();
 });
 
 app.get("/logout", (req, res): void => {
