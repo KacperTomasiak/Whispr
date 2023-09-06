@@ -4,12 +4,14 @@ type User = {
   privateKey: string;
   username: string;
   accountAge: number;
+  sessions: string[];
 };
 
 let user: User = {
   privateKey: "",
   username: "",
   accountAge: 0,
+  sessions: [],
 };
 
 const getData = (privateKey: string): void => {
@@ -33,4 +35,22 @@ const changeUsername = (privateKey: string, username: string): void => {
   );
 };
 
-export { user, getData, changeUsername };
+const joinSession = (privateKey: string, session: string): void => {
+  connection.query(
+    `SELECT * FROM whispr.sessions WHERE session = "${session}"`,
+    (err, result) => {
+      if (err) throw err;
+      if (result.length == 0) {
+        connection.query(
+          `INSERT INTO whispr.sessions VALUES ("${session}", "${privateKey}")`,
+          (err) => {
+            if (err) throw err;
+          }
+        );
+        user.sessions.push(session);
+      }
+    }
+  );
+};
+
+export { user, getData, changeUsername, joinSession };
