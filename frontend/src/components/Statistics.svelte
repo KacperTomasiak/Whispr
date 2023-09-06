@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { accountAge } from "../shared/user";
+  import { accountAge, numberOfSessions } from "../shared/user";
 </script>
 
 <div id="content-wrapper">
@@ -7,7 +7,7 @@
   <div id="statistics">
     <div id="number-of-sessions">
       <h3>Number of sessions</h3>
-      <div class="block">0</div>
+      <div class="block">{$numberOfSessions}</div>
     </div>
     <div id="account-age">
       <h3>Account age (days)</h3>
