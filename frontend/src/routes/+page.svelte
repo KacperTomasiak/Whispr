@@ -7,7 +7,7 @@
 <Nav activeButton={0} />
 <div id="content-wrapper">
   <SidePanel option="none" />
-  <Content option="none" />
+  <Content option="session" />
 </div>
 
 <style>

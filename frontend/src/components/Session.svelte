@@ -1,8 +1,18 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { currentSession } from "../shared/user";
+
   export let title: string;
+
+  let element: any;
+
+  const setCurrentSession = () => {
+    $currentSession = element.innerHTML;
+    goto("/");
+  };
 </script>
 
-<div>
+<div bind:this={element} on:click={setCurrentSession}>
   {title}
 </div>
 
