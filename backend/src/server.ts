@@ -3,6 +3,7 @@ import * as cors from "cors";
 import { createDatabase, createTables } from "./api/database";
 import { authenticateUser } from "./api/login";
 import { user, getData, changeUsername, joinSession } from "./api/user";
+import { sendMessage } from "./api/messages";
 
 const app = express();
 const port: number | string = 3000 || process.env.PORT;
@@ -40,6 +41,14 @@ app.post("/change-username", (req, res): void => {
 app.post("/join-session", (req, res): void => {
   let session: string = req.body.session;
   joinSession(user.privateKey, session);
+  res.end();
+});
+
+app.post("/send-message", (req, res): void => {
+  let privateKey: string = req.body.privateKey;
+  let session: string = req.body.session;
+  let message: string = req.body.message;
+  sendMessage(privateKey, session, message);
   res.end();
 });
 
