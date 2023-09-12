@@ -56,7 +56,7 @@ const changeUsername = (privateKey: string, username: string): void => {
 
 const joinSession = (privateKey: string, session: string): void => {
   connection.query(
-    `SELECT * FROM whispr.sessions WHERE session = "${session}"`,
+    `SELECT * FROM whispr.sessions WHERE session = "${session}" AND private_key = "${privateKey}"`,
     (err, result) => {
       if (err) throw err;
       if (result.length == 0) {
