@@ -3,16 +3,11 @@
   import { currentSession, privateKey, username } from "../shared/user";
 
   const logOut = async (): Promise<void> => {
-    const api: string = "http://localhost:3000";
-    fetch(`${api}/logout`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
     $privateKey = "";
     $currentSession = "";
+    localStorage.removeItem("privateKey");
     localStorage.removeItem("currentSession");
+    document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     goto("/login");
   };
 

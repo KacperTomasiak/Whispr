@@ -1,6 +1,9 @@
-import { writable, type Writable } from "svelte/store";
+import { browser } from "$app/environment";
+import { get, writable, type Writable } from "svelte/store";
 
-export let privateKey: Writable<string> = writable("");
+export let privateKey: Writable<string> = writable(
+  browser ? localStorage.privateKey : ""
+);
 export let username: Writable<string> = writable("");
 export let accountAge: Writable<number> = writable(0);
 export let numberOfSessions: Writable<number> = writable(0);
@@ -18,7 +21,7 @@ type Message = {
 
 export const getUserData = async (): Promise<any> => {
   const api: string = "http://localhost:3000";
-  let response = await fetch(`${api}/user`, {
+  let response = await fetch(`${api}/user/${get(privateKey)}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

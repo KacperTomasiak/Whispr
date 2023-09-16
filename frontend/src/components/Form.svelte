@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { enhance } from "$app/forms";
   import { privateKey } from "../shared/user";
   import { goto } from "$app/navigation";
   import Button from "./Button.svelte";
@@ -29,6 +30,7 @@
       }),
     });
     if (response.status == 200) {
+      localStorage.privateKey = $privateKey;
       goto("/");
     }
   };
@@ -49,6 +51,8 @@
   </form>
 {:else if type == "login"}
   <form
+    method="post"
+    use:enhance
     on:submit|preventDefault={async () => {
       if ($privateKey.length == 36 && $privateKey.startsWith("$whispr0x")) {
         await sendData();

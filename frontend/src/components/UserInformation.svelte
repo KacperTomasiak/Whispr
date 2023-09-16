@@ -1,15 +1,15 @@
 <script lang="ts">
-  import { syncUserData, username } from "../shared/user";
+  import { syncUserData, privateKey, username } from "../shared/user";
   import Button from "./Button.svelte";
 
   const changeUsername = async (): Promise<void> => {
     const api: string = "http://localhost:3000";
     await fetch(`${api}/change-username`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ username: $username }),
+      body: JSON.stringify({ privateKey: $privateKey, username: $username }),
     });
   };
 </script>
