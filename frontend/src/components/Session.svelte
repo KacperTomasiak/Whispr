@@ -4,11 +4,13 @@
   import { currentSession, messages } from "../shared/user";
   import io from "socket.io-client";
   import { slide } from "svelte/transition";
+  import Notification from "$lib/assets/notification.mp3";
 
   export let title: string;
 
   const socket = io("http://localhost:3000");
   let element: any;
+  let notification: any;
 
   const setCurrentSession = (): void => {
     $currentSession = element.innerHTML;
@@ -33,6 +35,7 @@
 
   socket.on("message", async (): Promise<void> => {
     await getMessages();
+    notification.play();
   });
 
   onMount(async () => {
@@ -53,6 +56,9 @@
 >
   {title}
 </div>
+<audio controls bind:this={notification}>
+  <source src={Notification} type="audio/mpeg" />
+</audio>
 
 <style>
   div {
@@ -72,5 +78,9 @@
 
   div:hover {
     opacity: 0.8;
+  }
+
+  audio {
+    display: none;
   }
 </style>
