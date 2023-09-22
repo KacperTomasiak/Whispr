@@ -2,6 +2,7 @@
   import { isVisible } from "../shared/visibility";
   import { privateKey, syncUserData } from "../shared/user";
   import Button from "./Button.svelte";
+  import { fade } from "svelte/transition";
 
   let session: string = "";
 
@@ -37,7 +38,10 @@
   };
 </script>
 
-<form on:submit|preventDefault={joinSession}>
+<form
+  on:submit|preventDefault={joinSession}
+  transition:fade={{ duration: 200 }}
+>
   <div id="close-button" on:click={() => ($isVisible = false)}>x</div>
   <h2>Generate new session</h2>
   <input
@@ -78,6 +82,8 @@
     flex-direction: column;
     padding: 50px 0px;
     position: absolute;
+    z-index: 2;
+    transform: translateX(150px);
   }
 
   #close-button {

@@ -82,6 +82,7 @@
     justify-content: space-around;
     flex-direction: column;
     padding: 50px 0px;
+    animation: animation 1s;
   }
 
   h2 {
@@ -102,5 +103,14 @@
 
   h4 {
     font-size: 1.4rem;
+  }
+
+  @keyframes animation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 </style>

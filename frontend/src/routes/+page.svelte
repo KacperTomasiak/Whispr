@@ -1,11 +1,16 @@
 <script lang="ts">
   import Nav from "../components/Nav.svelte";
   import SidePanel from "../components/SidePanel.svelte";
+  import NewSession from "../components/NewSession.svelte";
   import Content from "../components/Content.svelte";
+  import { isVisible } from "../shared/visibility";
 </script>
 
 <Nav activeButton={0} />
 <div id="content-wrapper">
+  {#if $isVisible == true}
+    <NewSession />
+  {/if}
   <SidePanel option="none" />
   <Content option="session" />
 </div>
