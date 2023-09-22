@@ -78,4 +78,25 @@ const joinSession = (privateKey: string, session: string): void => {
   );
 };
 
-export { user, getData, changeUsername, joinSession };
+const deleteAccount = (privateKey: string): void => {
+  connection.query(
+    `DELETE FROM whispr.users WHERE private_key = "${privateKey}"`,
+    (err) => {
+      if (err) throw err;
+      connection.query(
+        `DELETE FROM whispr.sessions WHERE private_key = "${privateKey}"`,
+        (err) => {
+          if (err) throw err;
+          connection.query(
+            `DELETE FROM whispr.messages WHERE private_key = "${privateKey}"`,
+            (err) => {
+              if (err) throw err;
+            }
+          );
+        }
+      );
+    }
+  );
+};
+
+export { user, getData, changeUsername, joinSession, deleteAccount };

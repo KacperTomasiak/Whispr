@@ -4,7 +4,13 @@ import * as http from "http";
 import { Server } from "socket.io";
 import { createDatabase, createTables } from "./api/database";
 import { authenticateUser } from "./api/login";
-import { user, getData, changeUsername, joinSession } from "./api/user";
+import {
+  user,
+  getData,
+  changeUsername,
+  joinSession,
+  deleteAccount,
+} from "./api/user";
 import { getMessage, sendMessage } from "./api/messages";
 
 const app = express();
@@ -78,4 +84,10 @@ app.post("/get-message", async (req, res): Promise<void> => {
   let session: string = req.body.session;
   let result: JSON = await getMessage(session);
   res.send(result);
+});
+
+app.delete("/delete-account", async (req, res): Promise<void> => {
+  let privateKey: string = req.body.privateKey;
+  deleteAccount(privateKey);
+  res.end();
 });
