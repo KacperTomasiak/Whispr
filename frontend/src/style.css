@@ -18,3 +18,8 @@ body {
   background-color: #131516;
   overflow: hidden;
 }
+
+::selection {
+  color: #06d6a0;
+  background-color: #131516;
+}

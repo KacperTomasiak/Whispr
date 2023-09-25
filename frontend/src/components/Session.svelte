@@ -13,7 +13,7 @@
   let notification: any;
 
   const setCurrentSession = (): void => {
-    $currentSession = element.innerHTML;
+    $currentSession = element;
     localStorage.currentSession = $currentSession;
     goto("/");
   };
@@ -47,12 +47,14 @@
 </script>
 
 <div
+  class:active={element == $currentSession}
   transition:slide={{ delay: 200, duration: 200, axis: "y" }}
-  bind:this={element}
+  bind:innerHTML={element}
   on:click={async () => {
     setCurrentSession();
     await getMessages();
   }}
+  contenteditable="false"
 >
   {title}
 </div>
@@ -66,7 +68,7 @@
     height: 60px;
     border-radius: 15px;
     background-color: #181d20;
-    color: #06d6a0;
+    color: white;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -74,6 +76,10 @@
     cursor: pointer;
     margin: 10px;
     padding: 10px;
+  }
+
+  .active {
+    color: #06d6a0;
   }
 
   div:hover {
