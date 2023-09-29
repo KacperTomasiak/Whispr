@@ -11,7 +11,6 @@
     let letters: string = "abcdefghijklmnopqrstuvwxyz";
     let numbers: string = "0123456789";
     let chars: string = letters + numbers;
-
     for (let i: number = 0; i < 7; i++) {
       for (let j: number = 0; j < 4; j++) {
         let num: number = Math.floor(Math.random() * chars.length);

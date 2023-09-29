@@ -2,8 +2,10 @@
   import Nav from "../../components/Nav.svelte";
   import Form from "../../components/Form.svelte";
   import Footer from "../../components/Footer.svelte";
+  import Title from "../../components/Title.svelte";
 </script>
 
+<Title title="Whispr | Sign Up" />
 <Nav activeButton={2} />
 <div id="form-wrapper">
   <Form type="signup" />

@@ -1,8 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { isVisible } from "../shared/visibility";
+  import { isVisible, showPopup } from "../shared/visibility";
   import { sessions } from "../shared/user";
   import { syncUserData } from "../shared/user";
+  import {
+    isSet,
+    sessionLength,
+    changeSessionLength,
+  } from "../shared/security";
+  import Popup from "./Popup.svelte";
   import Button from "./Button.svelte";
   import UserPanel from "./UserPanel.svelte";
   import Session from "./Session.svelte";
@@ -11,9 +17,16 @@
 
   onMount(async () => {
     await syncUserData();
+    if ($isSet == false) {
+      changeSessionLength($sessionLength);
+    }
   });
 </script>
 
+<Popup
+  title="Session length changed to {$sessionLength} minutes."
+  show={$showPopup}
+/>
 <div>
   <div id="chats">
     {#each $sessions as session}
