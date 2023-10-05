@@ -9,6 +9,7 @@ import {
   getData,
   changeUsername,
   joinSession,
+  leaveSession,
   deleteAccount,
 } from "./api/user";
 import { getMessage, sendMessage } from "./api/messages";
@@ -69,6 +70,13 @@ app.post("/join-session", (req, res): void => {
   let privateKey: string = req.body.privateKey;
   let session: string = req.body.session;
   joinSession(privateKey, session);
+  res.end();
+});
+
+app.delete("/leave-session", (req, res): void => {
+  let privateKey: string = req.body.privateKey;
+  let session: string = req.body.session;
+  leaveSession(privateKey, session);
   res.end();
 });
 
