@@ -86,7 +86,7 @@
     width: 80%;
     height: 60px;
     border-radius: 20px;
-    background-color: #181d20;
+    background-color: var(--third-color);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -118,7 +118,7 @@
     width: 40px;
     height: 40px;
     border-radius: 10px;
-    background-color: #06d6a0;
+    background-color: var(--first-color);
     margin-right: 10px;
   }
 
@@ -129,8 +129,8 @@
   input {
     border: none;
     border-radius: 20px;
-    background-color: #181d20;
-    color: #06d6a0;
+    background-color: var(--third-color);
+    color: var(--first-color);
     width: 150px;
     height: 40px;
     font-size: 2rem;

@@ -54,8 +54,8 @@
   }
 
   .block {
-    background-color: #06d6a0;
-    color: #131516;
+    background-color: var(--first-color);
+    color: var(--second-color);
     width: auto;
     height: auto;
     padding: 20px;

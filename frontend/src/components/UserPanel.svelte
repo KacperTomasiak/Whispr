@@ -37,7 +37,7 @@
   #user-panel {
     width: 80%;
     height: 250px;
-    background-color: #181d20;
+    background-color: var(--third-color);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -49,7 +49,7 @@
   #profile-picture {
     width: 35px;
     height: 35px;
-    background-color: #06d6a0;
+    background-color: var(--first-color);
     border-radius: 10px;
     margin-right: 10px;
   }
@@ -75,21 +75,21 @@
 
   a:hover {
     text-decoration: underline;
-    color: #06d6a0;
+    color: var(--first-color);
     cursor: pointer;
   }
 
   a:hover > i {
-    color: #06d6a0;
+    color: var(--first-color);
   }
 
   a.active {
     text-decoration: underline;
-    color: #06d6a0;
+    color: var(--first-color);
   }
 
   i.active {
-    color: #06d6a0;
+    color: var(--first-color);
   }
 
   i {

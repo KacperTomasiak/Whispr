@@ -7,7 +7,7 @@
   export let messageTime: string;
 </script>
 
-<div class="wrapper" class:green={key == $privateKey}>
+<div class="wrapper" class:user={key == $privateKey}>
   <div id="details">
     <div id="username">{username}</div>
     <div id="time">{messageTime}</div>
@@ -27,7 +27,7 @@
     margin: 20px auto 20px 20px;
     border-radius: 15px;
     color: white;
-    background-color: #181d20;
+    background-color: var(--third-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,9 +61,9 @@
     flex-wrap: wrap;
   }
 
-  .green {
-    background-color: #06d6a0;
-    color: #131516;
+  .user {
+    background-color: var(--first-color);
+    color: var(--second-color);
     margin: 20px 20px 20px auto;
   }
 </style>

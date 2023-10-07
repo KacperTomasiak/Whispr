@@ -3,7 +3,7 @@
 <style>
   h1 {
     font-size: 16rem;
-    color: #06d6a0;
+    color: var(--first-color);
     position: absolute;
     left: 50%;
     top: 50%;

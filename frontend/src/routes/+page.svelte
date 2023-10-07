@@ -4,18 +4,22 @@
   import NewSession from "../components/NewSession.svelte";
   import Content from "../components/Content.svelte";
   import Title from "../components/Title.svelte";
-  import { isVisible } from "../shared/visibility";
+  import Warning from "../components/Warning.svelte";
+  import { activeTheme, isVisible } from "../shared/visibility";
 </script>
 
 <Title title="Whispr | Chat" />
-<Nav activeButton={0} />
-<div id="content-wrapper">
-  {#if $isVisible == true}
-    <NewSession />
-  {/if}
-  <SidePanel option="none" />
-  <Content option="session" />
-</div>
+{#key $activeTheme}
+  <Nav activeButton={0} />
+  <Warning />
+  <div id="content-wrapper">
+    {#if $isVisible == true}
+      <NewSession />
+    {/if}
+    <SidePanel option="none" />
+    <Content option="session" />
+  </div>
+{/key}
 
 <style>
   #content-wrapper {
@@ -24,5 +28,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (max-width: 750px) {
+    #content-wrapper {
+      display: none;
+    }
   }
 </style>

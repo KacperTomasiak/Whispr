@@ -6,7 +6,7 @@
   #wrapper {
     width: 80%;
     height: 100%;
-    background-color: #131516;
+    background-color: var(--second-color);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +21,7 @@
     height: 50px;
     border-radius: 50%;
     border: 8px solid;
-    border-color: #06d6a0 #131516;
+    border-color: var(--first-color) var(--second-color);
     animation: loader-animation 1s infinite;
   }
 

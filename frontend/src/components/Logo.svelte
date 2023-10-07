@@ -8,6 +8,6 @@
   }
 
   span {
-    color: #06d6a0;
+    color: var(--first-color);
   }
 </style>

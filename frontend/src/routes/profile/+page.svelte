@@ -4,11 +4,13 @@
   import Content from "../../components/Content.svelte";
   import NewSession from "../../components/NewSession.svelte";
   import Title from "../../components/Title.svelte";
+  import Warning from "../../components/Warning.svelte";
   import { isVisible } from "../../shared/visibility";
 </script>
 
 <Title title="Whispr | Profile" />
 <Nav activeButton={0} />
+<Warning />
 <div id="content-wrapper">
   {#if $isVisible == true}
     <NewSession />
@@ -24,5 +26,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  @media (max-width: 750px) {
+    #content-wrapper {
+      display: none;
+    }
   }
 </style>
