@@ -25,7 +25,7 @@
         message: message,
       }),
     });
-    socket.emit("message", message);
+    socket.emit("session", $currentSession);
     message = "";
   };
 

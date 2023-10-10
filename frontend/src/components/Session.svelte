@@ -32,16 +32,15 @@
     $messages = result;
   };
 
-  socket.on("message", async (): Promise<void> => {
-    await getMessages();
-    notification.play();
+  socket.on("data", async (session: string): Promise<void> => {
+    if (session == $currentSession && element == $currentSession) {
+      await getMessages();
+      notification.play();
+    }
   });
 
   onMount(async () => {
-    if (localStorage.currentSession != undefined) {
-      $currentSession = localStorage.currentSession;
-      await getMessages();
-    }
+    await getMessages();
   });
 </script>
 

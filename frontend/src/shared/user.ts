@@ -8,7 +8,11 @@ export let username: Writable<string> = writable("");
 export let accountAge: Writable<number> = writable(0);
 export let numberOfSessions: Writable<number> = writable(0);
 export let sessions: Writable<string[]> = writable([]);
-export let currentSession: Writable<string> = writable("");
+export let currentSession: Writable<string> = writable(
+  browser && localStorage.currentSession != undefined
+    ? localStorage.currentSession
+    : ""
+);
 export let messages: Writable<Message[]> = writable([]);
 
 type Message = {
