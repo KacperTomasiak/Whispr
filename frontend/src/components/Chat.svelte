@@ -53,15 +53,17 @@
 </div>
 <div id="chat">
   {#each $messages as message}
-    <Message
-      message={message.message}
-      username={message.username}
-      key={message.privateKey}
-      messageTime={message.messageTime
-        .toString()
-        .slice(0, 19)
-        .replace("T", " ")}
-    />
+    {#key $messages}
+      <Message
+        message={message.message}
+        username={message.username}
+        key={message.privateKey}
+        messageTime={message.messageTime
+          .toString()
+          .slice(0, 19)
+          .replace("T", " ")}
+      />
+    {/key}
   {/each}
 </div>
 <div id="message">

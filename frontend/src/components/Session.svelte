@@ -39,6 +39,10 @@
     }
   });
 
+  socket.on("change", async (): Promise<void> => {
+    await getMessages();
+  });
+
   onMount(async () => {
     await getMessages();
   });

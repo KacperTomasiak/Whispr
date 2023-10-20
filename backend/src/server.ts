@@ -12,7 +12,12 @@ import {
   leaveSession,
   deleteAccount,
 } from "./api/user";
-import { getMessage, sendMessage } from "./api/messages";
+import {
+  getMessage,
+  sendMessage,
+  editMessage,
+  deleteMessage,
+} from "./api/messages";
 
 const app = express();
 const server = http.createServer(app);
@@ -31,6 +36,9 @@ io.on("connection", (socket: Socket): void => {
   console.log("Connected");
   socket.on("session", (session: string): void => {
     io.emit("data", session);
+  });
+  socket.on("change", (value: boolean): void => {
+    io.emit("change", value);
   });
   socket.on("disconnect", (): void => {
     console.log("Disconnected");
@@ -92,6 +100,23 @@ app.post("/get-message", async (req, res): Promise<void> => {
   let session: string = req.body.session;
   let result: JSON = await getMessage(session);
   res.send(result);
+});
+
+app.put("/edit-message", async (req, res): Promise<void> => {
+  let privateKey: string = req.body.privateKey;
+  let session: string = req.body.session;
+  let message: string = req.body.message;
+  let messageTime: string = req.body.time;
+  editMessage(privateKey, session, message, messageTime);
+  res.end();
+});
+
+app.delete("/delete-message", async (req, res): Promise<void> => {
+  let privateKey: string = req.body.privateKey;
+  let session: string = req.body.session;
+  let messageTime: string = req.body.time;
+  deleteMessage(privateKey, session, messageTime);
+  res.end();
 });
 
 app.delete("/delete-account", async (req, res): Promise<void> => {
