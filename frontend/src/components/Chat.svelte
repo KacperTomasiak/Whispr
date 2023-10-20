@@ -69,8 +69,6 @@
 <div id="message">
   <input
     type="text"
-    name="messageInput"
-    id="message-input"
     placeholder="Type your message here..."
     bind:value={message}
     on:keydown={async (e) => {
@@ -120,7 +118,7 @@
     justify-content: space-around;
   }
 
-  #message-input {
+  input {
     width: 85%;
     height: 40px;
     border: none;

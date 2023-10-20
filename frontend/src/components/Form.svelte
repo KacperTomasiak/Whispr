@@ -38,13 +38,7 @@
 {#if type == "signup"}
   <form on:submit|preventDefault={generatePrivateKey}>
     <h2>Generate your private key</h2>
-    <input
-      type="text"
-      name="privateKey"
-      id="private-key"
-      bind:value={$privateKey}
-      readonly
-    />
+    <input type="text" bind:value={$privateKey} readonly />
     <Button message="Generate" isActive={true} link="none" />
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
@@ -59,12 +53,7 @@
     }}
   >
     <h2>Enter your private key</h2>
-    <input
-      type="text"
-      name="privateKey"
-      id="private-key"
-      bind:value={$privateKey}
-    />
+    <input type="text" bind:value={$privateKey} />
     <Button message="Log In" isActive={true} link="none" />
     <h4>Private key is a unique identifier of a user.</h4>
   </form>

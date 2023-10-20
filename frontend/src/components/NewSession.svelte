@@ -43,13 +43,7 @@
 >
   <div id="close-button" on:click={() => ($isVisible = false)}>x</div>
   <h2>Generate new session</h2>
-  <input
-    type="text"
-    name="generatedSessionId"
-    id="generated-session-id"
-    bind:value={session}
-    readonly
-  />
+  <input type="text" bind:value={session} readonly />
   <Button
     message="Generate session"
     isActive={true}
@@ -60,12 +54,7 @@
     }}
   />
   <h2>Join new session</h2>
-  <input
-    type="text"
-    name="newSessionId"
-    id="new-session-id"
-    bind:value={session}
-  />
+  <input type="text" bind:value={session} />
   <Button message="Join session" isActive={true} link="none" />
 </form>
 
