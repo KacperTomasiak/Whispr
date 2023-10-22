@@ -17,7 +17,7 @@
 <div id="user-panel">
   <a href="/profile" id="user">
     <div id="profile-picture" />
-    <div id="nickname">{$username}</div>
+    <div id="username">{$username}</div>
   </a>
   <a class:active={option == "profile"} href="/profile" id="profile"
     ><i class:active={option == "profile"} class="fa-solid fa-user" />Profile</a
@@ -54,7 +54,7 @@
     margin-right: 10px;
   }
 
-  #nickname {
+  #username {
     font-size: 2rem;
     margin-left: 10px;
   }

@@ -17,6 +17,7 @@ body {
   height: 100vh;
   background-color: var(--second-color);
   overflow: hidden;
+  position: fixed;
 }
 
 ::selection {

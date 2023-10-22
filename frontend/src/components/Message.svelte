@@ -1,17 +1,33 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { currentSession, privateKey } from "../shared/user";
+  import {
+    currentSession,
+    isReplying,
+    messageId,
+    references,
+    privateKey,
+    messages,
+  } from "../shared/user";
   import { io } from "socket.io-client";
 
+  export let id: number;
   export let message: string;
   export let username: string;
   export let key: string;
+  export let reference: number;
   export let messageTime: string;
+  export let edited: boolean;
 
   const socket = io("http://localhost:3000");
   let showOptions: boolean = false;
   let isBeingEdited: boolean = false;
   let element: any;
+
+  const scrollToElement = (index: number): void => {
+    $references[index].$$.ctx[9].parentElement.parentElement.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
 
   const editMessage = async (): Promise<void> => {
     const api: string = "http://localhost:3000";
@@ -21,10 +37,9 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        privateKey: $privateKey,
+        id: id,
         session: $currentSession,
         message: message,
-        time: messageTime,
       }),
     });
     socket.emit("change", true);
@@ -40,9 +55,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        privateKey: $privateKey,
-        session: $currentSession,
-        time: messageTime,
+        id: id,
       }),
     });
     socket.emit("change", true);
@@ -54,88 +67,132 @@
   });
 </script>
 
-<div
-  class="wrapper"
-  class:my-message-wrapper={key == $privateKey}
-  on:keydown={async (e) => {
-    if (e.key == "Escape") {
-      isBeingEdited = false;
-      showOptions = false;
-    }
-    if (e.key == "Enter") {
-      await editMessage();
-      element.style.height = "auto";
-    }
-  }}
->
-  <div id="details">
-    <div id="username">{username}</div>
-    <div id="time">{messageTime}</div>
-  </div>
-  <div id="message-box">
-    <textarea
-      class:my-message={key == $privateKey}
-      bind:this={element}
-      bind:value={message}
-      readonly={!isBeingEdited}
-    />
-    {#if key == $privateKey}
+<div class="container" class:my-message-container={key == $privateKey}>
+  {#if reference != 0}
+    {#each $messages as message}
+      {#if message.id == reference}
+        <div
+          class="mini-wrapper"
+          class:my-message-wrapper={message.privateKey == $privateKey}
+          on:click={() => scrollToElement(reference)}
+        >
+          {message.message}
+        </div>
+      {/if}
+    {/each}
+  {/if}
+  <div
+    class="wrapper"
+    class:my-message-wrapper={key == $privateKey}
+    on:keydown={async (e) => {
+      if (e.key == "Escape") {
+        isBeingEdited = false;
+        showOptions = false;
+      }
+      if (e.key == "Enter") {
+        await editMessage();
+        element.style.height = "auto";
+      }
+    }}
+  >
+    <div id="details">
+      <div id="username">{username}</div>
+      <div id="time">{messageTime}</div>
+    </div>
+    <div id="message-box">
+      <textarea
+        class:my-message={key == $privateKey}
+        bind:this={element}
+        bind:value={message}
+        readonly={!isBeingEdited}
+      />
       <i
         class="fa-solid fa-ellipsis-vertical"
+        class:my-message={key == $privateKey}
         on:click={() => (showOptions = !showOptions)}
       />
-    {/if}
-  </div>
-  {#if showOptions == true}
-    <div id="options">
-      <div
-        class="option"
-        on:click={() => {
-          element.focus();
-          isBeingEdited = true;
-        }}
-      >
-        Edit
-      </div>
-      {#if isBeingEdited == true}
-        <div
-          class="option"
-          on:click={async () => {
-            await editMessage();
-            element.style.height = "auto";
-          }}
-        >
-          Save
+      {#if edited == true}
+        <div id="status" class:my-message={key == $privateKey}>Edited</div>
+      {/if}
+      {#if key == $privateKey && showOptions == true}
+        <div class="options my-message">
+          <div
+            class="option"
+            on:click={() => {
+              element.focus();
+              isBeingEdited = true;
+            }}
+          >
+            Edit
+          </div>
+          {#if isBeingEdited == true}
+            <div
+              class="option"
+              on:click={async () => {
+                await editMessage();
+                element.style.height = "auto";
+              }}
+            >
+              Save
+            </div>
+          {:else if isBeingEdited == false}
+            <div
+              class="option"
+              on:click={async () => {
+                await deleteMessage();
+              }}
+            >
+              Delete
+            </div>
+          {/if}
         </div>
-      {:else if isBeingEdited == false}
-        <div
-          class="option"
-          on:click={async () => {
-            await deleteMessage();
-          }}
-        >
-          Delete
+      {:else if key != $privateKey && showOptions == true}
+        <div class="options">
+          <div
+            class="option"
+            on:click={() => {
+              $messageId = id;
+              $isReplying = true;
+            }}
+          >
+            Reply
+          </div>
         </div>
       {/if}
     </div>
-  {/if}
+  </div>
 </div>
 
 <style>
-  .wrapper {
+  .container {
     max-width: 50%;
     min-width: 250px;
     width: auto;
     height: auto;
-    padding: 10px 20px;
     margin: 20px auto 20px 20px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .wrapper {
+    padding: 10px 20px;
     border-radius: 15px;
     color: white;
     background-color: var(--third-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+  }
+
+  .mini-wrapper {
+    max-width: 50%;
+    font-size: 1.8rem;
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: white;
+    background-color: var(--third-color);
+    word-wrap: break-word;
+    opacity: 0.8;
+    cursor: pointer;
   }
 
   #details {
@@ -159,16 +216,22 @@
     height: auto;
     color: inherit;
     font-size: 2.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    position: relative;
   }
 
-  #options {
+  #status {
+    width: 100%;
+    text-align: right;
+    font-size: 1.5rem;
+    color: white;
+    margin-top: 5px;
+  }
+
+  .options {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    color: white;
   }
 
   textarea {
@@ -187,25 +250,32 @@
     font-size: 1.8rem;
     margin: 10px 20px 0px;
     cursor: pointer;
+    color: inherit;
   }
 
   .option:hover {
     opacity: 0.8;
   }
 
+  .my-message-container {
+    margin: 20px 20px 20px auto;
+    align-items: flex-end;
+  }
+
   .my-message-wrapper {
     background-color: var(--first-color);
     color: var(--second-color);
-    margin: 20px 20px 20px auto;
   }
 
   .my-message {
-    color: var(--second-color);
+    color: var(--second-color) !important;
   }
 
   .fa-ellipsis-vertical {
-    color: var(--third-color);
+    color: white;
     margin: 0px 0px 0px auto;
     cursor: pointer;
+    position: absolute;
+    right: 0px;
   }
 </style>

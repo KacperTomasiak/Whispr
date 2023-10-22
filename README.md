@@ -10,6 +10,7 @@ A privacy focused chat application
 - Joining and leaving sessions
 - Sending and receiving messages in real time
 - Editing and deleting messages
+- Replying to messages
 - Changing the session length
 - Changing the username
 - Deleting the account

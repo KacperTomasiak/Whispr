@@ -34,6 +34,7 @@
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
+    overflow-x: hidden;
     overflow-y: auto;
   }
 

@@ -92,7 +92,8 @@ app.post("/send-message", (req, res): void => {
   let privateKey: string = req.body.privateKey;
   let session: string = req.body.session;
   let message: string = req.body.message;
-  sendMessage(privateKey, session, message);
+  let reference: number = req.body.reference;
+  sendMessage(privateKey, session, message, reference);
   res.end();
 });
 
@@ -103,19 +104,16 @@ app.post("/get-message", async (req, res): Promise<void> => {
 });
 
 app.put("/edit-message", async (req, res): Promise<void> => {
-  let privateKey: string = req.body.privateKey;
+  let id: number = req.body.id;
   let session: string = req.body.session;
   let message: string = req.body.message;
-  let messageTime: string = req.body.time;
-  editMessage(privateKey, session, message, messageTime);
+  editMessage(id, session, message);
   res.end();
 });
 
 app.delete("/delete-message", async (req, res): Promise<void> => {
-  let privateKey: string = req.body.privateKey;
-  let session: string = req.body.session;
-  let messageTime: string = req.body.time;
-  deleteMessage(privateKey, session, messageTime);
+  let id: number = req.body.id;
+  deleteMessage(id);
   res.end();
 });
 

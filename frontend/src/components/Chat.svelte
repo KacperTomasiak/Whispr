@@ -3,6 +3,9 @@
     currentSession,
     privateKey,
     messages,
+    messageId,
+    isReplying,
+    references,
     syncUserData,
   } from "../shared/user";
   import io from "socket.io-client";
@@ -23,10 +26,13 @@
         privateKey: $privateKey,
         session: $currentSession,
         message: message,
+        reference: $messageId,
       }),
     });
     socket.emit("session", $currentSession);
     message = "";
+    $messageId = 0;
+    $isReplying = false;
   };
 
   const leaveSession = async (): Promise<void> => {
@@ -55,17 +61,39 @@
   {#each $messages as message}
     {#key $messages}
       <Message
+        id={message.id}
         message={message.message}
         username={message.username}
         key={message.privateKey}
+        reference={message.reference}
         messageTime={message.messageTime
           .toString()
           .slice(0, 19)
           .replace("T", " ")}
+        edited={message.edited}
+        bind:this={$references[message.id]}
       />
     {/key}
   {/each}
 </div>
+{#if $isReplying == true}
+  <div id="reply">
+    <span
+      id="close-button"
+      on:click={() => {
+        $messageId = 0;
+        $isReplying = false;
+      }}
+    >
+      x
+    </span>
+    {#each $messages as message}
+      {#if message.id == $messageId}
+        Replying to message: {message.message}
+      {/if}
+    {/each}
+  </div>
+{/if}
 <div id="message">
   <input
     type="text"
@@ -105,9 +133,10 @@
   #chat {
     width: 80%;
     height: calc(100% - 60px - 40px - 40px);
-    overflow-y: auto;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column-reverse;
+    overflow-x: hidden;
   }
 
   #message {
@@ -116,6 +145,21 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+  }
+
+  #reply {
+    width: 80%;
+    padding: 20px;
+    font-size: 1.8rem;
+    text-align: left;
+    color: var(--first-color);
+    word-wrap: break-word;
+  }
+
+  #close-button {
+    margin: 0px 10px;
+    font-size: 2rem;
+    cursor: pointer;
   }
 
   input {
