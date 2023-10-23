@@ -1,12 +1,5 @@
-import { connection } from "./database";
-
-type User = {
-  privateKey: string;
-  username: string;
-  accountAge: number;
-  numberOfSessions: number;
-  sessions: string[];
-};
+import { connection } from "../database/database";
+import { User } from "../types/types";
 
 let user: User = {
   privateKey: "",

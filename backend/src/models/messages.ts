@@ -1,5 +1,5 @@
-import { connection } from "./database";
-import { encrypt, decrypt } from "./encryption";
+import { connection } from "../database/database";
+import { encrypt, decrypt } from "../services/encryption";
 
 const sendMessage = (
   privateKey: string,
@@ -35,11 +35,7 @@ const getMessage = async (session: string): Promise<JSON> => {
   });
 };
 
-const editMessage = async (
-  id: number,
-  session: string,
-  message: string
-): Promise<void> => {
+const editMessage = (id: number, session: string, message: string): void => {
   connection.query(
     `UPDATE whispr.messages SET message = "${encrypt(
       session,
@@ -51,7 +47,7 @@ const editMessage = async (
   );
 };
 
-const deleteMessage = async (id: number): Promise<void> => {
+const deleteMessage = (id: number): void => {
   connection.query(`DELETE FROM whispr.messages WHERE id = "${id}"`, (err) => {
     if (err) throw err;
   });
