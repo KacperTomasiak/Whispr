@@ -27,6 +27,7 @@ type Message = {
   reference: number;
   messageTime: string;
   edited: boolean;
+  attachments: string;
 };
 
 export const getUserData = async (): Promise<any> => {

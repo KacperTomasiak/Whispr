@@ -14,8 +14,15 @@
 
   const socket = io("http://localhost:3000");
   let message: any;
+  let uploadedContent: any;
 
   const sendMessage = async (): Promise<void> => {
+    let attachments: string[] = [];
+    if (uploadedContent != undefined) {
+      for (let i: number = 0; i < uploadedContent.length; i++) {
+        attachments.push(`${uploadedContent[i].name}`);
+      }
+    }
     const api: string = "http://localhost:3000";
     await fetch(`${api}/send-message`, {
       method: "POST",
@@ -27,6 +34,7 @@
         session: $currentSession,
         message: message,
         reference: $messageId,
+        attachments: attachments,
       }),
     });
     socket.emit("session", $currentSession);
@@ -51,6 +59,21 @@
     localStorage.currentSession = "";
     await syncUserData();
   };
+
+  const uploadFiles = async (): Promise<void> => {
+    const formData: FormData = new FormData();
+    for (let i: number = 0; i < uploadedContent.length; i++) {
+      formData.append("files", uploadedContent[i], uploadedContent[i].name);
+    }
+    formData.append("privateKey", $privateKey);
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/upload-files`, {
+      method: "POST",
+      headers: {},
+      body: formData,
+    });
+    uploadedContent = undefined;
+  };
 </script>
 
 <div id="session-title">
@@ -71,30 +94,49 @@
           .slice(0, 19)
           .replace("T", " ")}
         edited={message.edited}
+        attachments={message.attachments}
         bind:this={$references[message.id]}
       />
     {/key}
   {/each}
 </div>
-{#if $isReplying == true}
-  <div id="reply">
+{#if $isReplying == true || uploadedContent != undefined}
+  <div class="box">
     <span
       id="close-button"
       on:click={() => {
         $messageId = 0;
         $isReplying = false;
+        uploadedContent = undefined;
       }}
     >
       x
     </span>
-    {#each $messages as message}
-      {#if message.id == $messageId}
-        Replying to message: {message.message}
-      {/if}
-    {/each}
+    {#if $isReplying == true}
+      {#each $messages as message}
+        {#if message.id == $messageId}
+          Replying to message: {message.message}
+        {/if}
+      {/each}
+    {/if}
+    {#if uploadedContent != undefined}
+      Attachments: {uploadedContent.length}
+    {/if}
   </div>
 {/if}
 <div id="message">
+  <form>
+    <label for="upload-button">
+      <i class="fa-solid fa-file-import" />
+      <input
+        type="file"
+        id="upload-button"
+        bind:files={uploadedContent}
+        multiple
+        hidden
+      />
+    </label>
+  </form>
   <input
     type="text"
     placeholder="Type your message here..."
@@ -102,6 +144,14 @@
     on:keydown={async (e) => {
       if (e.key == "Enter" && message != undefined && message != "") {
         await sendMessage();
+      }
+      if (e.key == "Enter" && uploadedContent != undefined) {
+        await uploadFiles();
+      }
+      if (e.key == "Escape") {
+        $messageId = 0;
+        $isReplying = false;
+        uploadedContent = undefined;
       }
     }}
   />
@@ -111,6 +161,7 @@
     link="none"
     on:click={async () => {
       if (message != undefined && message != "") await sendMessage();
+      if (uploadedContent != undefined) await uploadFiles();
     }}
   />
 </div>
@@ -147,7 +198,7 @@
     justify-content: space-around;
   }
 
-  #reply {
+  .box {
     width: 80%;
     padding: 20px;
     font-size: 1.8rem;
@@ -178,6 +229,10 @@
   i {
     font-size: 2.8rem;
     cursor: pointer;
-    margin: 0px 0px 0px auto;
+    margin: 0px 10px 0px auto;
+  }
+
+  i:hover {
+    color: var(--first-color);
   }
 </style>

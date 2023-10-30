@@ -1,4 +1,5 @@
 import { connection } from "../database/database";
+import { createPersonalFolder } from "../services/media";
 
 const authenticateUser = async (privateKey: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
@@ -13,6 +14,7 @@ const authenticateUser = async (privateKey: string): Promise<boolean> => {
             `INSERT INTO whispr.users VALUES ("${privateKey}", "$anonymous", NOW())`,
             (err) => {
               if (err) throw err;
+              createPersonalFolder(privateKey);
               resolve(true);
             }
           );
