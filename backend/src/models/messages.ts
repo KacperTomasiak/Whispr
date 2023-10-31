@@ -18,6 +18,18 @@ const getLatestId = async (privateKey: string): Promise<number> => {
   });
 };
 
+const getPrivateKey = async (id: number): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT private_key FROM whispr.messages WHERE id = "${id}"`,
+      (err, data) => {
+        if (err) throw err;
+        resolve(data[0].private_key);
+      }
+    );
+  });
+};
+
 const sendMessage = async (
   privateKey: string,
   session: string,
@@ -76,4 +88,11 @@ const deleteMessage = (privateKey: string, id: number): void => {
   });
 };
 
-export { getLatestId, sendMessage, getMessage, editMessage, deleteMessage };
+export {
+  getLatestId,
+  getPrivateKey,
+  sendMessage,
+  getMessage,
+  editMessage,
+  deleteMessage,
+};
