@@ -10,7 +10,6 @@
   "author": "Kacper Tomasiak",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^8.2.0",
-    "express-fileupload": "^1.4.1"
+    "concurrently": "^8.2.0"
   }
 }
