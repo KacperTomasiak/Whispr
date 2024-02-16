@@ -48,7 +48,13 @@
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
 {:else if type == "login"}
-  <form on:submit|preventDefault={sendData}>
+  <form
+    on:submit|preventDefault={async () => {
+      if ($privateKey.length == 36 && $privateKey.startsWith("$whispr0x")) {
+        await sendData();
+      }
+    }}
+  >
     <h2>Enter your private key</h2>
     <input
       type="text"

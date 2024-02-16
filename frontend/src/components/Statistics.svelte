@@ -50,6 +50,7 @@
     justify-content: space-around;
     flex-direction: column;
     height: 100%;
+    text-align: center;
   }
 
   .block {

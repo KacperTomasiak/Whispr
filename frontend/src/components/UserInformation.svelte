@@ -23,8 +23,10 @@
       isActive={true}
       link="none"
       on:click={async () => {
-        await changeUsername();
-        await syncUserData();
+        if ($username.startsWith("$")) {
+          await changeUsername();
+          await syncUserData();
+        }
       }}
     />
   </div>
@@ -93,6 +95,7 @@
     justify-content: space-around;
     flex-direction: column;
     height: 100px;
+    text-align: center;
   }
 
   h3 {
