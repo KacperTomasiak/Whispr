@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { privateKey, username } from "../shared/user";
+  import { currentSession, privateKey, username } from "../shared/user";
 
   const logOut = async (): Promise<void> => {
     const api: string = "http://localhost:3000";
@@ -11,6 +11,7 @@
       },
     });
     $privateKey = "";
+    $currentSession = "";
     goto("/login");
   };
 

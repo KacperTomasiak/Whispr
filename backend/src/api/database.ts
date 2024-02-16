@@ -29,6 +29,12 @@ const createTables = (): void => {
       if (err) throw err;
     }
   );
+  connection.query(
+    "CREATE TABLE IF NOT EXISTS whispr.messages (session varchar(34), private_key varchar(36), message text, message_time date)",
+    (err) => {
+      if (err) throw err;
+    }
+  );
 };
 
 export { connection, createDatabase, createTables };

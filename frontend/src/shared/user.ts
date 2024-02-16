@@ -5,6 +5,7 @@ export let username: Writable<string> = writable("");
 export let accountAge: Writable<number> = writable(0);
 export let numberOfSessions: Writable<number> = writable(0);
 export let sessions: Writable<string[]> = writable([]);
+export let currentSession: Writable<string> = writable("");
 
 export const getUserData = async (): Promise<any> => {
   const api: string = "http://localhost:3000";

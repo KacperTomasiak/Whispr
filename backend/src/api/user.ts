@@ -37,7 +37,7 @@ const getData = (privateKey: string): void => {
     }
   );
   connection.query(
-    `SELECT COUNT(session) as num FROM whispr.sessions WHERE private_key = "${privateKey}"`,
+    `SELECT COUNT(session) AS num FROM whispr.sessions WHERE private_key = "${privateKey}"`,
     (err, result) => {
       if (err) throw err;
       user.numberOfSessions = result[0].num;

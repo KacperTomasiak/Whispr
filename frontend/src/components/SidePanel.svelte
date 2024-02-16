@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
   import { isVisible } from "../shared/visibility";
-  import { sessions } from "../shared/user";
+  import { currentSession, sessions } from "../shared/user";
   import { syncUserData } from "../shared/user";
   import Button from "./Button.svelte";
   import UserPanel from "./UserPanel.svelte";

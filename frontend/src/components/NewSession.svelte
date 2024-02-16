@@ -101,6 +101,5 @@
     font-size: 2rem;
     outline: none;
     text-align: center;
-    resize: none;
   }
 </style>

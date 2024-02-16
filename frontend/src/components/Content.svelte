@@ -5,6 +5,8 @@
   import Statistics from "./Statistics.svelte";
   import Themes from "./Themes.svelte";
   import SessionLength from "./SessionLength.svelte";
+  import Chat from "./Chat.svelte";
+  import { currentSession } from "../shared/user";
 
   export let option: string;
 </script>
@@ -19,6 +21,8 @@
   {:else if option == "settings"}
     <Themes />
     <SessionLength />
+  {:else if option == "session" && $currentSession != ""}
+    <Chat />
   {/if}
 </div>
 
