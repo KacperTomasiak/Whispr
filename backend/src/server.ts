@@ -1,27 +1,38 @@
-const express = require("express");
+import * as express from "express";
+import * as cors from "cors";
+import { createDatabase, createTable } from "./api/database";
+import { authenticateUser } from "./api/login";
+import { user, getData } from "./api/user";
+
 const app = express();
 const port: number | string = 3000 || process.env.PORT;
-const database = require("./api/database");
-const login = require("./api/login");
-const cors = require("cors");
 
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
 app.listen(port, (): void => {
-  database.createDatabase();
-  database.createTable();
+  createDatabase();
+  createTable();
 });
 
 app.post("/login", async (req, res): Promise<void> => {
   let privateKey: string = req.body.privateKey;
-  let result: boolean = await login.authenticateUser(privateKey);
+  let result: boolean = await authenticateUser(privateKey);
   if (result == true) {
+    getData(privateKey);
     res.status(200).send("OK");
   } else {
     res.status(500).send("Error");
   }
 });
 
-export { database };
+app.get("/user", (req, res): void => {
+  res.send(JSON.stringify(user));
+});
+
+app.get("/logout", (req, res): void => {
+  user.privateKey = "";
+  user.username = "";
+  res.end();
+});

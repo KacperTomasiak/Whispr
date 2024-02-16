@@ -1,5 +1,17 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { username } from "../shared/user";
+
+  const logOut = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    fetch(`${api}/logout`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    goto("/login");
+  };
 
   export let option: string;
 </script>
@@ -18,7 +30,7 @@
       class="fa-solid fa-gear"
     />Settings</a
   >
-  <a href="/login" id="log-out"
+  <a id="log-out" on:click={logOut}
     ><i class="fa-solid fa-right-from-bracket" />Log Out</a
   >
 </div>
@@ -66,6 +78,7 @@
   a:hover {
     text-decoration: underline;
     color: #06d6a0;
+    cursor: pointer;
   }
 
   a:hover > i {

@@ -1,4 +1,4 @@
-const mysql = require("mysql");
+import * as mysql from "mysql";
 
 const connection = mysql.createConnection({
   host: "localhost",
@@ -25,8 +25,4 @@ const createTable = (): void => {
   );
 };
 
-module.exports = {
-  createDatabase,
-  createTable,
-  connection,
-};
+export { connection, createDatabase, createTable };
