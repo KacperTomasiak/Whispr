@@ -18,6 +18,7 @@
   button {
     width: auto;
     padding: 0px 10px;
+    margin: 10px;
     height: 40px;
     border-radius: 20px;
     border: none;
