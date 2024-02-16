@@ -1,7 +1,8 @@
-<div on:click={() => window.location.reload()}>Whispr<span>.</span></div>
+<a href="/">Whispr<span>.</span></a>
 
 <style>
-  div {
+  a {
+    text-decoration: none;
     font-size: 3.2rem;
     cursor: pointer;
   }
