@@ -66,15 +66,12 @@
 
   const downloadFile = async (file: string): Promise<void> => {
     const api: string = "http://localhost:3000";
-    const response = await fetch(
-      `${api}/download-file/${$privateKey}/${id}/${file}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(`${api}/download-file/${id}/${file}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     const data = await response.blob();
     const url = window.URL.createObjectURL(data);
     const a = document.createElement("a");

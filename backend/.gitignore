@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 media
+src/controllers/controllers.js
 src/database/database.js
 src/models/login.js
 src/models/messages.js
