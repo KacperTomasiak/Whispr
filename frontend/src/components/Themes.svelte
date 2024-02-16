@@ -1,15 +1,43 @@
+<script lang="ts">
+  import { activeTheme } from "../shared/visibility";
+
+  let themes: number[] = [0, 0, 0];
+  themes[$activeTheme] = 1;
+
+  const changeTheme = (index: number): void => {
+    for (let i: number = 0; i < themes.length; i++) {
+      themes[i] = 0;
+    }
+    themes[index] = 1;
+    $activeTheme = index;
+    localStorage.activeTheme = index;
+  };
+</script>
+
 <div id="content-wrapper">
   <h2>Themes</h2>
   <div id="themes">
-    <div class="theme active">
+    <div
+      class="theme"
+      on:click={() => changeTheme(0)}
+      class:active={themes[0] == 1}
+    >
       <div class="first-color first-theme" />
       <div class="second-color first-theme" />
     </div>
-    <div class="theme">
+    <div
+      class="theme"
+      on:click={() => changeTheme(1)}
+      class:active={themes[1] == 1}
+    >
       <div class="first-color second-theme" />
       <div class="second-color second-theme" />
     </div>
-    <div class="theme">
+    <div
+      class="theme"
+      on:click={() => changeTheme(2)}
+      class:active={themes[2] == 1}
+    >
       <div class="first-color third-theme" />
       <div class="second-color third-theme" />
     </div>

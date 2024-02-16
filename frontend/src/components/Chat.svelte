@@ -94,8 +94,8 @@
     margin-bottom: 20px;
     font-size: 2.5rem;
     border-radius: 20px;
-    background-color: #181d20;
-    color: #06d6a0;
+    background-color: var(--third-color);
+    color: var(--first-color);
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -124,9 +124,9 @@
     border: none;
     border-radius: 20px;
     padding-left: 10px;
-    background-color: #131516;
+    background-color: var(--second-color);
     color: white;
-    border: 2px solid #06d6a0;
+    border: 2px solid var(--first-color);
     font-size: 2rem;
     outline: none;
   }

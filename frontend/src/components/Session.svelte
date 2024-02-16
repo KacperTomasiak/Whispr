@@ -4,7 +4,6 @@
   import { currentSession, messages } from "../shared/user";
   import io from "socket.io-client";
   import { slide } from "svelte/transition";
-  import Notification from "$lib/assets/notification.mp3";
 
   export let title: string;
 
@@ -59,7 +58,7 @@
   {title}
 </div>
 <audio controls bind:this={notification}>
-  <source src={Notification} type="audio/mpeg" />
+  <source src="/sounds/notification.mp3" type="audio/mpeg" />
 </audio>
 
 <style>
@@ -67,7 +66,7 @@
     width: 80%;
     height: 60px;
     border-radius: 15px;
-    background-color: #181d20;
+    background-color: var(--third-color);
     color: white;
     text-align: center;
     display: flex;
@@ -79,7 +78,7 @@
   }
 
   .active {
-    color: #06d6a0;
+    color: var(--first-color);
   }
 
   div:hover {

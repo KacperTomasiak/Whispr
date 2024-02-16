@@ -15,11 +15,11 @@ html {
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #131516;
+  background-color: var(--second-color);
   overflow: hidden;
 }
 
 ::selection {
-  color: #06d6a0;
-  background-color: #131516;
+  color: var(--first-color);
+  background-color: var(--second-color);
 }

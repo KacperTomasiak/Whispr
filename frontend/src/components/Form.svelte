@@ -75,7 +75,7 @@
     width: 480px;
     height: 450px;
     border-radius: 20px;
-    background-color: #181d20;
+    background-color: var(--third-color);
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -91,8 +91,8 @@
   input {
     border: none;
     border-radius: 20px;
-    background-color: #131516;
-    color: #06d6a0;
+    background-color: var(--second-color);
+    color: var(--first-color);
     width: 80%;
     height: 40px;
     font-size: 2rem;

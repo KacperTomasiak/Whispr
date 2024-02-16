@@ -32,7 +32,7 @@
   }
 
   .active {
-    color: #131516;
-    background-color: #06d6a0;
+    color: var(--second-color);
+    background-color: var(--first-color);
   }
 </style>

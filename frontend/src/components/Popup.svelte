@@ -15,8 +15,8 @@
   div {
     width: 300px;
     height: auto;
-    color: #131516;
-    background-color: #06d6a0;
+    color: var(--second-color);
+    background-color: var(--first-color);
     font-size: 2rem;
     border-radius: 10px;
     position: absolute;
