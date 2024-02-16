@@ -12,6 +12,7 @@
     });
     $privateKey = "";
     $currentSession = "";
+    localStorage.removeItem("currentSession");
     goto("/login");
   };
 
