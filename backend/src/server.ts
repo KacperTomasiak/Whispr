@@ -1,7 +1,7 @@
 import * as express from "express";
 import * as cors from "cors";
 import * as http from "http";
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import { createDatabase, createTables } from "./api/database";
 import { authenticateUser } from "./api/login";
 import {
@@ -27,10 +27,10 @@ app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
-io.on("connection", (socket): void => {
+io.on("connection", (socket: Socket): void => {
   console.log("Connected");
-  socket.on("message", (message): void => {
-    io.emit("message", message);
+  socket.on("session", (session: string): void => {
+    io.emit("data", session);
   });
   socket.on("disconnect", (): void => {
     console.log("Disconnected");
