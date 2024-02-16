@@ -1,5 +1,7 @@
 <script lang="ts">
   import NewSession from "./NewSession.svelte";
+  import UserInformation from "./UserInformation.svelte";
+  import Statistics from "./Statistics.svelte";
 
   export let option: string;
 </script>
@@ -7,6 +9,9 @@
 <div>
   {#if option == "none"}
     <NewSession />
+  {:else if option == "profile"}
+    <UserInformation />
+    <Statistics />
   {/if}
 </div>
 
@@ -16,6 +21,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-direction: column;
   }
 </style>
