@@ -30,7 +30,12 @@
       id="private-key"
       value="$whispr0x7ab81hrt4kf09bv17hrq24x0dvt"
     />
-    <Button message="Log In" isActive={true} link="" />
+    <Button
+      message="Log In"
+      isActive={true}
+      link="none"
+      on:click={(e) => e.preventDefault()}
+    />
     <h4>Private key is a unique identifier of a user.</h4>
   </form>
 {/if}
