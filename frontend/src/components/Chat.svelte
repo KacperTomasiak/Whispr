@@ -1,6 +1,24 @@
 <script lang="ts">
-  import { currentSession } from "../shared/user";
+  import { currentSession, privateKey } from "../shared/user";
   import Button from "./Button.svelte";
+
+  let message: any;
+
+  const sendMessage = async () => {
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/send-message`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        privateKey: $privateKey,
+        session: $currentSession,
+        message: message.value,
+      }),
+    });
+    message.value = "";
+  };
 </script>
 
 <div id="session-title">{$currentSession}</div>
@@ -11,8 +29,16 @@
     name="messageInput"
     id="message-input"
     placeholder="Type your message here..."
+    bind:this={message}
   />
-  <Button message="Send" isActive={true} link="none" />
+  <Button
+    message="Send"
+    isActive={true}
+    link="none"
+    on:click={async () => {
+      await sendMessage();
+    }}
+  />
 </div>
 
 <style>

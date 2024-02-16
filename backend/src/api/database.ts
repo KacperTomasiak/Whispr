@@ -18,19 +18,19 @@ const createDatabase = (): void => {
 
 const createTables = (): void => {
   connection.query(
-    "CREATE TABLE IF NOT EXISTS whispr.users (private_key varchar(36), username text, registration_date date)",
+    "CREATE TABLE IF NOT EXISTS whispr.users (private_key VARCHAR(36), username TEXT, registration_date DATE)",
     (err) => {
       if (err) throw err;
     }
   );
   connection.query(
-    "CREATE TABLE IF NOT EXISTS whispr.sessions (session varchar(34), private_key varchar(36))",
+    "CREATE TABLE IF NOT EXISTS whispr.sessions (session VARCHAR(34), private_key VARCHAR(36))",
     (err) => {
       if (err) throw err;
     }
   );
   connection.query(
-    "CREATE TABLE IF NOT EXISTS whispr.messages (session varchar(34), private_key varchar(36), message text, message_time date)",
+    "CREATE TABLE IF NOT EXISTS whispr.messages (session VARCHAR(34), private_key VARCHAR(36), message TEXT, message_time DATETIME)",
     (err) => {
       if (err) throw err;
     }

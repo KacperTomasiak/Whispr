@@ -4,3 +4,4 @@ src/server.js
 src/api/login.js
 src/api/database.js
 src/api/user.js
+src/api/messages.js
