@@ -18,7 +18,7 @@ const createDatabase = (): void => {
 
 const createTable = (): void => {
   connection.query(
-    "CREATE TABLE IF NOT EXISTS whispr.users (private_key varchar(36), username text)",
+    "CREATE TABLE IF NOT EXISTS whispr.users (private_key varchar(36), username text, registration_date date)",
     (err) => {
       if (err) throw err;
     }

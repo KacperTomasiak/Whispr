@@ -1,9 +1,15 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { isVisible } from "../shared/visibility";
+  import { syncUserData } from "../shared/user";
   import Button from "./Button.svelte";
   import UserPanel from "./UserPanel.svelte";
 
   export let option: string;
+
+  onMount(async () => {
+    await syncUserData();
+  });
 </script>
 
 <div>

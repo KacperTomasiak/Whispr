@@ -1,10 +1,16 @@
 <script lang="ts">
-  import { username } from "../shared/user";
+  import { syncUserData, username } from "../shared/user";
   import Button from "./Button.svelte";
 
-  let temporaryUsername: string = $username;
-  const updateUsername = (): void => {
-    $username = temporaryUsername;
+  const changeUsername = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/change-username`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username: $username }),
+    });
   };
 </script>
 
@@ -16,7 +22,10 @@
       message="Save"
       isActive={true}
       link="none"
-      on:click={updateUsername}
+      on:click={async () => {
+        await changeUsername();
+        await syncUserData();
+      }}
     />
   </div>
   <div id="information">
@@ -30,7 +39,7 @@
         type="text"
         name="username"
         id="username-input"
-        bind:value={temporaryUsername}
+        bind:value={$username}
       />
     </div>
   </div>

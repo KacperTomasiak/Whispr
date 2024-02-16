@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { accountAge } from "../shared/user";
+</script>
+
 <div id="content-wrapper">
   <h2>Statistics</h2>
   <div id="statistics">
@@ -7,7 +11,7 @@
     </div>
     <div id="account-age">
       <h3>Account age (days)</h3>
-      <div class="block">0</div>
+      <div class="block">{$accountAge}</div>
     </div>
   </div>
 </div>
