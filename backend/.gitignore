@@ -1,0 +1,5 @@
+.DS_Store
+node_modules
+src/server.js
+src/api/login.js
+src/api/database.js
