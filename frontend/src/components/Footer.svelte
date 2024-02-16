@@ -8,5 +8,8 @@
     text-align: center;
     position: absolute;
     bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>
