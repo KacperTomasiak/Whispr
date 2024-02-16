@@ -56,11 +56,11 @@
   <div id="information">
     <div id="private-key">
       <h3>Private Key</h3>
-      <input type="text" size="35" bind:value={$privateKey} readonly />
+      <input type="text" size="40" bind:value={$privateKey} readonly />
     </div>
     <div id="username">
       <h3>Username</h3>
-      <input type="text" size="10" bind:value={$username} />
+      <input type="text" size="15" bind:value={$username} />
     </div>
     <Button
       message="Delete account"
@@ -74,7 +74,7 @@
 <style>
   #content-wrapper {
     width: 100%;
-    height: 220px;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -103,7 +103,7 @@
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
-    margin-top: 10px;
+    margin-top: 40px;
   }
 
   #private-key,

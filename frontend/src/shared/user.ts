@@ -14,13 +14,19 @@ export let currentSession: Writable<string> = writable(
     : ""
 );
 export let messages: Writable<Message[]> = writable([]);
+export let isReplying: Writable<boolean> = writable(false);
+export let messageId: Writable<number> = writable(0);
+export let references: Writable<any> = writable([]);
 
 type Message = {
+  id: number;
   session: string;
   privateKey: string;
   username: string;
   message: string;
+  reference: number;
   messageTime: string;
+  edited: boolean;
 };
 
 export const getUserData = async (): Promise<any> => {
