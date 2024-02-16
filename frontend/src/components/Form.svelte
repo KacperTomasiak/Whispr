@@ -11,7 +11,6 @@
     let numbers: string = "0123456789";
     let chars: string = letters + numbers;
     $privateKey = "$whispr0x";
-
     for (let i = 0; i < 27; i++) {
       let num: number = Math.floor(Math.random() * chars.length);
       $privateKey += chars.substring(num, num + 1);

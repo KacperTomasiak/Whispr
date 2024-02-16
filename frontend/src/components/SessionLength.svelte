@@ -1,14 +1,30 @@
 <script lang="ts">
   import Button from "./Button.svelte";
+  import { sessionLength, changeSessionLength } from "../shared/security";
 </script>
 
 <div id="content-wrapper">
   <h2>Session Length</h2>
   <h4>This refers to the time after which you will be logged out.</h4>
   <div id="session-length">
-    <Button message="15 minutes" isActive={true} link="none" />
-    <Button message="30 minutes" isActive={true} link="none" />
-    <Button message="1 hour" isActive={true} link="none" />
+    <Button
+      message="15 minutes"
+      isActive={$sessionLength == 15}
+      link="none"
+      on:click={() => changeSessionLength(15)}
+    />
+    <Button
+      message="30 minutes"
+      isActive={$sessionLength == 30}
+      link="none"
+      on:click={() => changeSessionLength(30)}
+    />
+    <Button
+      message="1 hour"
+      isActive={$sessionLength == 60}
+      link="none"
+      on:click={() => changeSessionLength(60)}
+    />
   </div>
 </div>
 

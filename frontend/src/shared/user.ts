@@ -2,7 +2,7 @@ import { browser } from "$app/environment";
 import { get, writable, type Writable } from "svelte/store";
 
 export let privateKey: Writable<string> = writable(
-  browser ? localStorage.privateKey : ""
+  browser && localStorage.privateKey != undefined ? localStorage.privateKey : ""
 );
 export let username: Writable<string> = writable("");
 export let accountAge: Writable<number> = writable(0);

@@ -3,9 +3,11 @@
   import SidePanel from "../../components/SidePanel.svelte";
   import Content from "../../components/Content.svelte";
   import NewSession from "../../components/NewSession.svelte";
+  import Title from "../../components/Title.svelte";
   import { isVisible } from "../../shared/visibility";
 </script>
 
+<Title title="Whispr | Settings" />
 <Nav activeButton={0} />
 <div id="content-wrapper">
   {#if $isVisible == true}
