@@ -1,8 +1,10 @@
 .DS_Store
 node_modules
+src/database/database.js
+src/models/login.js
+src/models/messages.js
+src/models/user.js
+src/services/encryption.js
+src/router/routes.js
+src/types/types.js
 src/server.js
-src/api/login.js
-src/api/database.js
-src/api/user.js
-src/api/messages.js
-src/api/encryption.js

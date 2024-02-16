@@ -1,4 +1,4 @@
-import { connection } from "./database";
+import { connection } from "../database/database";
 
 const authenticateUser = async (privateKey: string): Promise<boolean> => {
   return new Promise((resolve, reject) => {
