@@ -47,8 +47,9 @@
     placeholder="Type your message here..."
     bind:value={message}
     on:keydown={async (e) => {
-      if (e.key == "Enter" && message != undefined && message != "")
+      if (e.key == "Enter" && message != undefined && message != "") {
         await sendMessage();
+      }
     }}
   />
   <Button
@@ -81,7 +82,7 @@
     height: calc(100% - 60px - 40px - 40px);
     overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 
   #message {

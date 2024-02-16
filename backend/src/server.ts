@@ -36,29 +36,33 @@ server.listen(port, (): void => {
 });
 
 app.post("/login", async (req, res): Promise<void> => {
-  user.privateKey = req.body.privateKey;
-  let result: boolean = await authenticateUser(user.privateKey);
+  let privateKey: string = req.body.privateKey;
+  let result: boolean = await authenticateUser(privateKey);
   if (result == true) {
-    getData(user.privateKey);
+    getData(privateKey);
     res.status(200).send("OK");
   } else {
     res.status(500).send("Error");
   }
 });
 
-app.get("/user", (req, res): void => {
-  if (user.privateKey != "") getData(user.privateKey);
+app.get("/user/:key", async (req, res): Promise<void> => {
+  let privateKey: string = req.params.key;
+  await getData(privateKey);
   res.send(JSON.stringify(user));
 });
 
-app.post("/change-username", (req, res): void => {
-  changeUsername(user.privateKey, req.body.username);
+app.put("/change-username", (req, res): void => {
+  let privateKey: string = req.body.privateKey;
+  let username: string = req.body.username;
+  changeUsername(privateKey, username);
   res.end();
 });
 
 app.post("/join-session", (req, res): void => {
+  let privateKey: string = req.body.privateKey;
   let session: string = req.body.session;
-  joinSession(user.privateKey, session);
+  joinSession(privateKey, session);
   res.end();
 });
 
@@ -74,13 +78,4 @@ app.post("/get-message", async (req, res): Promise<void> => {
   let session: string = req.body.session;
   let result: JSON = await getMessage(session);
   res.send(result);
-});
-
-app.get("/logout", (req, res): void => {
-  user.privateKey = "";
-  user.username = "";
-  user.accountAge = 0;
-  user.numberOfSessions = 0;
-  user.sessions = [];
-  res.end();
 });

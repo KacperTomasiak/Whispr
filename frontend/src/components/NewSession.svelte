@@ -1,6 +1,6 @@
 <script lang="ts">
   import { isVisible } from "../shared/visibility";
-  import { syncUserData } from "../shared/user";
+  import { privateKey, syncUserData } from "../shared/user";
   import Button from "./Button.svelte";
 
   let session: string = "";
@@ -28,6 +28,7 @@
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        privateKey: $privateKey,
         session: session,
       }),
     });
