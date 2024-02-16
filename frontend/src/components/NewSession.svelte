@@ -1,5 +1,6 @@
 <script lang="ts">
   import { isVisible } from "../shared/visibility";
+  import { syncUserData } from "../shared/user";
   import Button from "./Button.svelte";
 
   let session: string = "";
@@ -30,6 +31,8 @@
         session: session,
       }),
     });
+    await syncUserData();
+    $isVisible = false;
   };
 </script>
 
