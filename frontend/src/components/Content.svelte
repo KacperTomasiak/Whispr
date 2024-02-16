@@ -20,7 +20,9 @@
     <Themes />
     <SessionLength />
   {:else if option == "session" && $currentSession != ""}
-    <Chat />
+    {#key $currentSession}
+      <Chat />
+    {/key}
   {/if}
 </div>
 

@@ -31,6 +31,7 @@ const getData = (privateKey: string): Promise<void> => {
             if (err) reject(err);
             let length: number = result.length;
             if (length > 0) {
+              user.sessions = [];
               for (let i: number = 0; i < length; i++) {
                 user.sessions[i] = result[i].session;
               }
@@ -78,6 +79,15 @@ const joinSession = (privateKey: string, session: string): void => {
   );
 };
 
+const leaveSession = (privateKey: string, session: string): void => {
+  connection.query(
+    `DELETE FROM whispr.sessions WHERE session = "${session}" AND private_key = "${privateKey}"`,
+    (err) => {
+      if (err) throw err;
+    }
+  );
+};
+
 const deleteAccount = (privateKey: string): void => {
   connection.query(
     `DELETE FROM whispr.users WHERE private_key = "${privateKey}"`,
@@ -99,4 +109,11 @@ const deleteAccount = (privateKey: string): void => {
   );
 };
 
-export { user, getData, changeUsername, joinSession, deleteAccount };
+export {
+  user,
+  getData,
+  changeUsername,
+  joinSession,
+  leaveSession,
+  deleteAccount,
+};

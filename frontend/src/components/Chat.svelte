@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { currentSession, privateKey, messages } from "../shared/user";
+  import {
+    currentSession,
+    privateKey,
+    messages,
+    syncUserData,
+  } from "../shared/user";
   import io from "socket.io-client";
   import Button from "./Button.svelte";
   import Message from "./Message.svelte";
@@ -23,9 +28,29 @@
     socket.emit("message", message);
     message = "";
   };
+
+  const leaveSession = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/leave-session`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        privateKey: $privateKey,
+        session: $currentSession,
+      }),
+    });
+    $currentSession = "";
+    localStorage.currentSession = "";
+    await syncUserData();
+  };
 </script>
 
-<div id="session-title">{$currentSession}</div>
+<div id="session-title">
+  {$currentSession}
+  <i class="fa-solid fa-right-from-bracket" on:click={leaveSession} />
+</div>
 <div id="chat">
   {#each $messages as message}
     <Message
@@ -104,5 +129,11 @@
     border: 2px solid #06d6a0;
     font-size: 2rem;
     outline: none;
+  }
+
+  i {
+    font-size: 2.8rem;
+    cursor: pointer;
+    margin: 0px 0px 0px auto;
   }
 </style>
