@@ -19,14 +19,11 @@
 
   const getMessages = async (): Promise<void> => {
     const api: string = "http://localhost:3000";
-    let response = await fetch(`${api}/get-message`, {
-      method: "POST",
+    let response = await fetch(`${api}/get-message/${$currentSession}`, {
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        session: $currentSession,
-      }),
     });
     const result = await response.json();
     $messages = result;

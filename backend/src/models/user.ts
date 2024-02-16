@@ -1,5 +1,6 @@
 import { connection } from "../database/database";
 import { User } from "../types/types";
+import { deletePersonalFolder } from "../services/media";
 
 let user: User = {
   privateKey: "",
@@ -94,6 +95,7 @@ const deleteAccount = (privateKey: string): void => {
             `DELETE FROM whispr.messages WHERE private_key = "${privateKey}"`,
             (err) => {
               if (err) throw err;
+              deletePersonalFolder(privateKey);
             }
           );
         }

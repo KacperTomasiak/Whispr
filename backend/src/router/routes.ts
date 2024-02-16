@@ -1,4 +1,5 @@
 import * as express from "express";
+import * as path from "path";
 import { authenticateUser } from "../models/login";
 import {
   user,
@@ -9,11 +10,13 @@ import {
   deleteAccount,
 } from "../models/user";
 import {
+  getLatestId,
   getMessage,
   sendMessage,
   editMessage,
   deleteMessage,
 } from "../models/messages";
+import { readAndMoveFile } from "../services/media";
 
 const router = express.Router();
 
@@ -60,12 +63,34 @@ router.post("/send-message", (req, res): void => {
   let session: string = req.body.session;
   let message: string = req.body.message;
   let reference: number = req.body.reference;
-  sendMessage(privateKey, session, message, reference);
+  let attachments: string[] = req.body.attachments;
+  sendMessage(privateKey, session, message, reference, attachments);
   res.end();
 });
 
-router.post("/get-message", async (req, res): Promise<void> => {
-  let session: string = req.body.session;
+router.post("/upload-files", async (req, res): Promise<void> => {
+  let privateKey: string = req.body.privateKey;
+  let id: number = await getLatestId(privateKey);
+  let files: any = req.files.files;
+  if (files.length > 1) {
+    for (let file of files) {
+      readAndMoveFile(privateKey, id, file);
+    }
+  } else {
+    readAndMoveFile(privateKey, id, files);
+  }
+  res.end();
+});
+
+router.get("/download-file/:key/:id/:file", (req, res): void => {
+  let privateKey: string = req.params.key;
+  let id: number = req.params.id;
+  let file: string = req.params.file;
+  res.download(path.join(__dirname, `../../media/${privateKey}/${id}/${file}`));
+});
+
+router.get("/get-message/:session", async (req, res): Promise<void> => {
+  let session: string = req.params.session;
   let result: JSON = await getMessage(session);
   res.send(result);
 });
@@ -79,8 +104,9 @@ router.put("/edit-message", (req, res): void => {
 });
 
 router.delete("/delete-message", (req, res): void => {
+  let privateKey: string = req.body.privateKey;
   let id: number = req.body.id;
-  deleteMessage(id);
+  deleteMessage(privateKey, id);
   res.end();
 });
 

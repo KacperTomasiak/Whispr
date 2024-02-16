@@ -11,6 +11,7 @@ A privacy focused chat application
 - Sending and receiving messages in real time
 - Editing and deleting messages
 - Replying to messages
+- Uploading and downloading files
 - Changing the session length
 - Changing the username
 - Deleting the account

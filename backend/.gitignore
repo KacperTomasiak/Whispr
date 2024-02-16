@@ -1,9 +1,11 @@
 .DS_Store
 node_modules
+media
 src/database/database.js
 src/models/login.js
 src/models/messages.js
 src/models/user.js
+src/services/media.js
 src/services/encryption.js
 src/router/routes.js
 src/types/types.js

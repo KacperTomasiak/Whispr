@@ -30,8 +30,8 @@ const createTables = (): void => {
     }
   );
   connection.query(
-    "CREATE TABLE IF NOT EXISTS whispr.messages (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, session VARCHAR(34), " +
-      "private_key VARCHAR(36), message TEXT, reference int, message_time DATETIME, edited BOOLEAN)",
+    "CREATE TABLE IF NOT EXISTS whispr.messages (id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY, session VARCHAR(34), " +
+      "private_key VARCHAR(36), message TEXT, reference BIGINT(20), message_time DATETIME, edited BOOLEAN, attachments TEXT)",
     (err) => {
       if (err) throw err;
     }
