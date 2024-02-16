@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { syncUserData, privateKey, username } from "../shared/user";
+  import { goto } from "$app/navigation";
+  import {
+    syncUserData,
+    privateKey,
+    username,
+    currentSession,
+  } from "../shared/user";
   import Button from "./Button.svelte";
 
   const changeUsername = async (): Promise<void> => {
@@ -12,11 +18,27 @@
       body: JSON.stringify({ privateKey: $privateKey, username: $username }),
     });
   };
+
+  const deleteAccount = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/delete-account`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ privateKey: $privateKey }),
+    });
+    $privateKey = "";
+    $currentSession = "";
+    localStorage.removeItem("privateKey");
+    localStorage.removeItem("currentSession");
+    document.cookie = "auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    goto("/login");
+  };
 </script>
 
 <div id="content-wrapper">
   <div id="user">
-    <div id="profile-picture" />
     <div id="nickname">{$username}</div>
     <Button
       message="Save"
@@ -31,10 +53,6 @@
     />
   </div>
   <div id="information">
-    <div id="picture">
-      <h3>Profile Picture</h3>
-      <div class="block" />
-    </div>
     <div id="username">
       <h3>Username</h3>
       <input
@@ -44,6 +62,12 @@
         bind:value={$username}
       />
     </div>
+    <Button
+      message="Delete account"
+      isActive={true}
+      link="none"
+      on:click={deleteAccount}
+    />
   </div>
 </div>
 
@@ -68,14 +92,6 @@
     padding: 0px 20px;
   }
 
-  #profile-picture {
-    width: 40px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #06d6a0;
-    margin-right: 10px;
-  }
-
   #nickname {
     font-size: 2.8rem;
     flex: 1;
@@ -88,7 +104,6 @@
     justify-content: space-around;
   }
 
-  #picture,
   #username {
     display: flex;
     align-items: center;
@@ -100,13 +115,6 @@
 
   h3 {
     font-size: 2rem;
-  }
-
-  .block {
-    background-color: #06d6a0;
-    width: 65px;
-    height: 65px;
-    border-radius: 10px;
   }
 
   input {
