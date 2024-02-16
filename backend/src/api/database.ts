@@ -16,13 +16,19 @@ const createDatabase = (): void => {
   });
 };
 
-const createTable = (): void => {
+const createTables = (): void => {
   connection.query(
     "CREATE TABLE IF NOT EXISTS whispr.users (private_key varchar(36), username text, registration_date date)",
     (err) => {
       if (err) throw err;
     }
   );
+  connection.query(
+    "CREATE TABLE IF NOT EXISTS whispr.sessions (session varchar(34), private_key varchar(36))",
+    (err) => {
+      if (err) throw err;
+    }
+  );
 };
 
-export { connection, createDatabase, createTable };
+export { connection, createDatabase, createTables };

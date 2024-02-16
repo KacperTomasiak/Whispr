@@ -1,8 +1,8 @@
 import * as express from "express";
 import * as cors from "cors";
-import { createDatabase, createTable } from "./api/database";
+import { createDatabase, createTables } from "./api/database";
 import { authenticateUser } from "./api/login";
-import { user, getData, changeUsername } from "./api/user";
+import { user, getData, changeUsername, joinSession } from "./api/user";
 
 const app = express();
 const port: number | string = 3000 || process.env.PORT;
@@ -13,7 +13,7 @@ app.use(cors());
 
 app.listen(port, (): void => {
   createDatabase();
-  createTable();
+  createTables();
 });
 
 app.post("/login", async (req, res): Promise<void> => {
@@ -37,8 +37,15 @@ app.post("/change-username", (req, res): void => {
   res.end();
 });
 
+app.post("/join-session", (req, res): void => {
+  let session: string = req.body.session;
+  joinSession(user.privateKey, session);
+});
+
 app.get("/logout", (req, res): void => {
   user.privateKey = "";
   user.username = "";
+  user.accountAge = 0;
+  user.sessions = [];
   res.end();
 });

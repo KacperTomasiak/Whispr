@@ -18,9 +18,22 @@
       if (i < 6) session += "-";
     }
   };
+
+  const joinSession = async (): Promise<void> => {
+    const api: string = "http://localhost:3000";
+    await fetch(`${api}/join-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        session: session,
+      }),
+    });
+  };
 </script>
 
-<form>
+<form on:submit|preventDefault={joinSession}>
   <div id="close-button" on:click={() => ($isVisible = false)}>x</div>
   <h2>Generate new session</h2>
   <input
@@ -40,13 +53,13 @@
     }}
   />
   <h2>Join new session</h2>
-  <input type="text" name="newSessionId" id="new-session-id" />
-  <Button
-    message="Join session"
-    isActive={true}
-    link="none"
-    on:click={(e) => e.preventDefault()}
+  <input
+    type="text"
+    name="newSessionId"
+    id="new-session-id"
+    bind:value={session}
   />
+  <Button message="Join session" isActive={true} link="none" />
 </form>
 
 <style>
