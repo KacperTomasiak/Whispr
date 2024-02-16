@@ -7,7 +7,7 @@
   export let messageTime: string;
 </script>
 
-<div class="container" class:green={key == $privateKey}>
+<div class="wrapper" class:green={key == $privateKey}>
   <div id="details">
     <div id="username">{username}</div>
     <div id="time">{messageTime}</div>
@@ -18,7 +18,7 @@
 </div>
 
 <style>
-  .container {
+  .wrapper {
     max-width: 50%;
     min-width: 250px;
     width: auto;

@@ -39,6 +39,7 @@
 
 <div id="content-wrapper">
   <div id="user">
+    <div class="block" />
     <div id="nickname">{$username}</div>
     <Button
       message="Save"
@@ -111,6 +112,14 @@
     flex-direction: column;
     height: 100px;
     text-align: center;
+  }
+
+  .block {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #06d6a0;
+    margin-right: 10px;
   }
 
   h3 {

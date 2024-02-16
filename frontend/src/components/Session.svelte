@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import { currentSession, messages } from "../shared/user";
   import io from "socket.io-client";
+  import { slide } from "svelte/transition";
 
   export let title: string;
 
@@ -43,6 +44,7 @@
 </script>
 
 <div
+  transition:slide={{ delay: 200, duration: 200, axis: "y" }}
   bind:this={element}
   on:click={async () => {
     setCurrentSession();

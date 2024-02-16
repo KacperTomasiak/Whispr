@@ -1,20 +1,18 @@
 <script lang="ts">
   import { isVisible } from "../shared/visibility";
-  import NewSession from "./NewSession.svelte";
+  import { currentSession } from "../shared/user";
   import UserInformation from "./UserInformation.svelte";
   import Statistics from "./Statistics.svelte";
   import Themes from "./Themes.svelte";
   import SessionLength from "./SessionLength.svelte";
   import Chat from "./Chat.svelte";
-  import { currentSession } from "../shared/user";
+  import LoadingScreen from "./LoadingScreen.svelte";
 
   export let option: string;
 </script>
 
-<div>
-  {#if $isVisible == true}
-    <NewSession />
-  {/if}
+<div class:blur={$isVisible}>
+  <LoadingScreen />
   {#if option == "profile"}
     <UserInformation />
     <Statistics />
@@ -35,5 +33,10 @@
     justify-content: flex-start;
     flex-direction: column;
     overflow-y: auto;
+  }
+
+  .blur {
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
   }
 </style>
