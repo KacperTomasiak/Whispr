@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { isVisible } from "../shared/visibility";
   import NewSession from "./NewSession.svelte";
   import UserInformation from "./UserInformation.svelte";
   import Statistics from "./Statistics.svelte";
@@ -9,9 +10,10 @@
 </script>
 
 <div>
-  {#if option == "none"}
+  {#if $isVisible == true}
     <NewSession />
-  {:else if option == "profile"}
+  {/if}
+  {#if option == "profile"}
     <UserInformation />
     <Statistics />
   {:else if option == "settings"}

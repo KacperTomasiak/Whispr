@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { isVisible } from "../shared/visibility";
   import Button from "./Button.svelte";
 </script>
 
 <form>
-  <div id="close-button">x</div>
+  <div id="close-button" on:click={() => ($isVisible = false)}>x</div>
   <h2>Generate new session</h2>
   <input
     type="text"
@@ -47,7 +48,7 @@
     justify-content: space-around;
     flex-direction: column;
     padding: 50px 0px;
-    position: relative;
+    position: absolute;
   }
 
   #close-button {
