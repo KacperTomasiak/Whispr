@@ -4,7 +4,11 @@
   export let link: string;
 </script>
 
-<a href="/{link}"><button class:active={isActive}>{message}</button></a>
+{#if link == "none"}
+  <button class:active={isActive} on:click>{message}</button>
+{:else}
+  <a href="/{link}"><button class:active={isActive}>{message}</button></a>
+{/if}
 
 <style>
   a {
@@ -12,7 +16,8 @@
   }
 
   button {
-    width: 120px;
+    width: auto;
+    padding: 0px 10px;
     height: 40px;
     border-radius: 20px;
     border: none;

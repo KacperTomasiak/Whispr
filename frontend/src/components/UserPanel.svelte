@@ -1,0 +1,89 @@
+<script lang="ts">
+  export let option: string;
+</script>
+
+<div id="user-panel">
+  <a href="/profile" id="user">
+    <div id="profile-picture" />
+    <div id="nickname">$test_user</div>
+  </a>
+  <a class:active={option == "profile"} href="/profile" id="profile"
+    ><i class:active={option == "profile"} class="fa-solid fa-user" />Profile</a
+  >
+  <a class:active={option == "settings"} href="settings" id="settings"
+    ><i
+      class:active={option == "settings"}
+      class="fa-solid fa-gear"
+    />Settings</a
+  >
+  <a href="/login" id="log-out"
+    ><i class="fa-solid fa-right-from-bracket" />Log Out</a
+  >
+</div>
+
+<style>
+  #user-panel {
+    width: 80%;
+    height: 250px;
+    background-color: #181d20;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    font-size: 2rem;
+    border-radius: 20px;
+  }
+
+  #profile-picture {
+    width: 35px;
+    height: 35px;
+    background-color: #06d6a0;
+    border-radius: 10px;
+    margin-right: 10px;
+  }
+
+  #nickname {
+    font-size: 2rem;
+    margin-left: 10px;
+  }
+
+  #user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #user:hover {
+    text-decoration: none;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+    color: #06d6a0;
+  }
+
+  a:hover > i {
+    color: #06d6a0;
+  }
+
+  a.active {
+    text-decoration: underline;
+    color: #06d6a0;
+  }
+
+  i.active {
+    color: #06d6a0;
+  }
+
+  i {
+    margin-right: 10px;
+  }
+
+  .fa-right-from-bracket {
+    rotate: 180deg;
+  }
+</style>
