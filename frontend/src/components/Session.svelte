@@ -2,9 +2,11 @@
   import { goto } from "$app/navigation";
   import { onMount } from "svelte";
   import { currentSession, messages } from "../shared/user";
+  import io from "socket.io-client";
 
   export let title: string;
 
+  const socket = io("http://localhost:3000");
   let element: any;
 
   const setCurrentSession = (): void => {
@@ -27,6 +29,10 @@
     const result = await response.json();
     $messages = result;
   };
+
+  socket.on("message", async (): Promise<void> => {
+    await getMessages();
+  });
 
   onMount(async () => {
     if (localStorage.currentSession != undefined) {

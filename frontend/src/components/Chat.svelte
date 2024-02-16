@@ -1,8 +1,10 @@
 <script lang="ts">
   import { currentSession, privateKey, messages } from "../shared/user";
+  import io from "socket.io-client";
   import Button from "./Button.svelte";
   import Message from "./Message.svelte";
 
+  const socket = io("http://localhost:3000");
   let message: any;
 
   const sendMessage = async (): Promise<void> => {
@@ -15,10 +17,11 @@
       body: JSON.stringify({
         privateKey: $privateKey,
         session: $currentSession,
-        message: message.value,
+        message: message,
       }),
     });
-    message.value = "";
+    socket.emit("message", message);
+    message = "";
   };
 </script>
 
@@ -42,14 +45,18 @@
     name="messageInput"
     id="message-input"
     placeholder="Type your message here..."
-    bind:this={message}
+    bind:value={message}
+    on:keydown={async (e) => {
+      if (e.key == "Enter" && message != undefined && message != "")
+        await sendMessage();
+    }}
   />
   <Button
     message="Send"
     isActive={true}
     link="none"
     on:click={async () => {
-      await sendMessage();
+      if (message != undefined && message != "") await sendMessage();
     }}
   />
 </div>

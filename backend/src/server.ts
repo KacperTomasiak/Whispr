@@ -1,18 +1,36 @@
 import * as express from "express";
 import * as cors from "cors";
+import * as http from "http";
+import { Server } from "socket.io";
 import { createDatabase, createTables } from "./api/database";
 import { authenticateUser } from "./api/login";
 import { user, getData, changeUsername, joinSession } from "./api/user";
 import { getMessage, sendMessage } from "./api/messages";
 
 const app = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 const port: number | string = 3000 || process.env.PORT;
 
 app.use(express.urlencoded());
 app.use(express.json());
 app.use(cors());
 
-app.listen(port, (): void => {
+io.on("connection", (socket): void => {
+  console.log("Connected");
+  socket.on("message", (message): void => {
+    io.emit("message", message);
+  });
+  socket.on("disconnect", (): void => {
+    console.log("Disconnected");
+  });
+});
+
+server.listen(port, (): void => {
   createDatabase();
   createTables();
 });
