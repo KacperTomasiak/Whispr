@@ -54,14 +54,13 @@
     />
   </div>
   <div id="information">
+    <div id="private-key">
+      <h3>Private Key</h3>
+      <input type="text" size="35" bind:value={$privateKey} readonly />
+    </div>
     <div id="username">
       <h3>Username</h3>
-      <input
-        type="text"
-        name="username"
-        id="username-input"
-        bind:value={$username}
-      />
+      <input type="text" size="10" bind:value={$username} />
     </div>
     <Button
       message="Delete account"
@@ -78,7 +77,7 @@
     height: 220px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: flex-start;
     flex-direction: column;
   }
 
@@ -103,8 +102,11 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 10px;
   }
 
+  #private-key,
   #username {
     display: flex;
     align-items: center;
@@ -131,7 +133,6 @@
     border-radius: 20px;
     background-color: var(--third-color);
     color: var(--first-color);
-    width: 150px;
     height: 40px;
     font-size: 2rem;
     outline: none;
