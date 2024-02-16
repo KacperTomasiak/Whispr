@@ -4,6 +4,7 @@ type User = {
   privateKey: string;
   username: string;
   accountAge: number;
+  numberOfSessions: number;
   sessions: string[];
 };
 
@@ -11,6 +12,7 @@ let user: User = {
   privateKey: "",
   username: "",
   accountAge: 0,
+  numberOfSessions: 0,
   sessions: [],
 };
 
@@ -30,8 +32,15 @@ const getData = (privateKey: string): void => {
       if (err) throw err;
       let length: number = result.length;
       for (let i: number = 0; i < length; i++) {
-        user.sessions.push(result[i].session);
+        user.sessions[i] = result[i].session;
       }
+    }
+  );
+  connection.query(
+    `SELECT COUNT(session) as num FROM whispr.sessions WHERE private_key = "${privateKey}"`,
+    (err, result) => {
+      if (err) throw err;
+      user.numberOfSessions = result[0].num;
     }
   );
 };

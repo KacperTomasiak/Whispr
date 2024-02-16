@@ -17,10 +17,10 @@ app.listen(port, (): void => {
 });
 
 app.post("/login", async (req, res): Promise<void> => {
-  let privateKey: string = req.body.privateKey;
-  let result: boolean = await authenticateUser(privateKey);
+  user.privateKey = req.body.privateKey;
+  let result: boolean = await authenticateUser(user.privateKey);
   if (result == true) {
-    getData(privateKey);
+    getData(user.privateKey);
     res.status(200).send("OK");
   } else {
     res.status(500).send("Error");
@@ -28,12 +28,12 @@ app.post("/login", async (req, res): Promise<void> => {
 });
 
 app.get("/user", (req, res): void => {
+  if (user.privateKey != "") getData(user.privateKey);
   res.send(JSON.stringify(user));
 });
 
 app.post("/change-username", (req, res): void => {
   changeUsername(user.privateKey, req.body.username);
-  getData(user.privateKey);
   res.end();
 });
 
@@ -47,6 +47,7 @@ app.get("/logout", (req, res): void => {
   user.privateKey = "";
   user.username = "";
   user.accountAge = 0;
+  user.numberOfSessions = 0;
   user.sessions = [];
   res.end();
 });
